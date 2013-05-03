@@ -1,0 +1,12 @@
+django==1.4.2
+Pillow
+sorl-thumbnail
+django-ckeditor==4.0.2
+django-filebrowser==3.5.1
+django-keyedcache
+django-admin-tools
+django-livesettings
+pytils
+django-mptt
+feincms
+django-taggit

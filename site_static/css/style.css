@@ -1,0 +1,211 @@
+@font-face { 
+    font-family: 'Franklin'; 
+   src: url('../fonts/frangbcc-webfont.eot');
+    src: url('../fonts/frangbcc-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/frangbcc-webfont.woff') format('woff'),
+         url('../fonts/frangbcc-webfont.ttf') format('truetype'),
+         url('../fonts/frangbcc-webfont.svg#franklingothicbookcmpcbook') format('svg');
+    font-weight: normal;
+    font-style: normal;	
+} 
+
+.wrapper{
+    width:950px;
+    margin: 0 auto;
+    font-family: 'Franklin', sans-serif;
+}
+
+.wrapper a:hover{
+    text-decoration: none;
+}
+.wrapper_main{
+    background: url("../img/1.jpg") no-repeat 0 25px;
+}
+.nav-main{
+    width:450px;
+    height:430px;
+    margin: 0px auto 0;
+    background: url(../img/middle.jpg) no-repeat 0 100px;
+    position: relative;
+    top: 47px;
+    margin-left: 348px;
+}
+.b-cabinet{
+    width:170px;
+    float:right;
+    text-align: right;
+    top:18px;
+    position: relative;
+
+}
+.b-cabinet__search{
+    width:157px;
+    height:28px;
+    float:right;
+    display: block;
+    color:#d9d9d9;
+    border: 1px solid #d9d9d9;
+    border-radius:5px;
+    outline: none;
+    margin-top: 10px;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	padding-left:10px;
+
+}
+.b-cabinet__entry{
+    position:relative;
+    color:#272727;
+    text-decoration: none;
+    margin-right: 15px;
+}
+.b-cabinet__reg{
+    position:relative;
+    color:#6d6d6d;
+    text-decoration: none;
+}
+
+.b-cabinet__entry:after{
+    content:'\002F';
+    position:absolute;
+    top:0;
+    right:-13px;
+
+}
+.nav-main li, .nav-top li, .nav-main_foot li, .nav-left li{
+    display: inline-block;
+    vertical-align: top;
+}
+.nav-main__l{
+    text-transform: uppercase;
+    font-size: 16px;
+    position: relative;
+    text-align: center;
+    color:#b2b2b2;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: top;
+}
+.nav-main .nav-main__l, .nav-main_foot .nav-main__l{
+     width:85px;
+
+}
+.nav-main .nav-main__l_1{
+    left:105px;
+    top: 5px;
+
+}
+.nav-main__l img{
+    margin-bottom: 2px;
+    margin-top: 3px;
+}
+.nav-main .nav-main__l_2{
+    top: 149px;
+    right: 163px;
+}
+.nav-main .nav-main__l_3{
+    top: 150px;
+    left: 103px;
+}
+.nav-main .nav-main__l_4{
+    top: 228px;
+    right: 160px;
+}
+.nav-main .nav-main__l_5{
+    top: 206px;
+    right: 77px;
+}
+.nav-main .nav-main__l_6{
+    top: 206px;
+    left: 192px;
+}
+.nav-main_foot .nav-main__l_7{
+    left: 74px;
+    top: 21px;
+}
+.nav-main_foot .nav-main__l_8{
+    margin-left: 363px;
+    top: 2px;
+}
+
+.nav-main_foot .nav-main__l_9{
+    margin-left: 320px;
+    top:17px;
+}
+
+.nav-main_foot{
+    margin-top: 50px;
+}
+.nav-top__l{
+    display:inline-block;
+    margin-left: 10px;
+}
+.nav-top .nav-main__l{
+    width:70px;
+    height:72px;
+    margin-top: 10px;
+    margin-left: 0px;
+}
+.sidebar{
+    clear: right;
+    width:200px;
+    float:right;
+    padding-top: 30px;
+    padding-right: 5px;
+}
+.nav-left{
+    width:150px;
+}
+.content{
+    width:740px;
+    float:left;
+    padding-top: 30px;
+    font-size: 16px;
+    color: #000;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    line-height: 1.5;
+    padding-left: 110px;
+    padding-right: 30px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.nav-top{
+    padding-left: 85px;
+}
+.b-info__title{
+    font-size: 26px;
+    font-family:Verdana, Arial, sans-Serif;
+    letter-spacing: -0.8pt;
+}
+.b-info__tags{
+    font-family: Arial, Helvetica, Sans-Serif;
+    color: #777;
+    font-size: 13px;
+    display: block;
+    margin:0px 0 15px 0;
+}
+
+.content p {
+    margin: 10px 0;
+}
+.b-info__tags_bottom{
+    margin-top:30px;
+}
+.b-info{
+    margin-bottom:50px;
+}
+.content a{
+    color:#0055cc;
+}
+
+.tag-cloud{text-align:center;}
+.tag-cloud li{display:inline;margin-right:5px;line-height:22px}
+.tag-cloud li a{color:#727a90}
+.tag-cloud li a:hover{color:red}
+.tag-cloud li .tag-size-1{font-size:14px}
+.tag-cloud li .tag-size-2{font-size:18px}
+.tag-cloud li .tag-size-3{font-size:20px}
+.tag-cloud li .tag-size-4{font-size:22px}
+.tag-cloud li .tag-size-5{font-size:24px}
+.tag-cloud li .tag-size-6{font-size:26px}
+.tag-cloud li .tag-size-7{font-size:28px}
