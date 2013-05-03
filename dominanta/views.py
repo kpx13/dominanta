@@ -57,11 +57,8 @@ def articles_page(request, category=None):
 def article_page(request, category, name):
     c = get_common_context(request)
     
-    if category:
-        c['category'] = Category.get_by_slug(category)
-        descendants = c['category'].get_descendants(include_self=True)
-    else:
-        descendants = Category.objects.all()
+    c['category'] = Category.get_by_slug(category)
+    descendants = c['category'].get_descendants(include_self=True)
     
     c['article'] = Article.objects.get(slug=name, category__in=descendants)
     categoies = c['article'].category.all()
