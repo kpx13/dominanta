@@ -83,7 +83,7 @@ class Article(models.Model):
     text = RichTextField(verbose_name=u'контент')
     desc = RichTextField(max_length=512, verbose_name=u'вступительный контент')
     tags = TaggableManager(blank=True, through=ArticleTaggedItem)
-    slug = models.SlugField(verbose_name=u'slug', unique=True, blank=True, help_text=u'Заполнять не нужно')
+    slug = models.SlugField(max_length=200, verbose_name=u'slug', unique=True, blank=True, help_text=u'Заполнять не нужно')
    
     class Meta:
         verbose_name = u'статья'

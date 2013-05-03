@@ -79,4 +79,5 @@ def tags_page(request, tag=None):
     c = get_common_context(request)
     c['articles'] = Article.get_by_tag(tag)
     c['tag'] = ArticleTag.objects.filter(slug__in=[tag])[0]
+    c['category'] = Category.get_by_slug('mikst')
     return render_to_response('articles.html', c, context_instance=RequestContext(request))
