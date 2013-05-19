@@ -11,3 +11,4 @@ django-mptt
 feincms
 django-taggit
 django-tinymce
+django-ulogin

@@ -70,6 +70,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
+    "django.core.context_processors.static",
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
 )
@@ -113,7 +114,8 @@ INSTALLED_APPS = (
     'mptt',
     'feincms.module.medialibrary',
     'taggit',
-    
+    'django_ulogin',
+
     'pages',
     'blog'
 )
@@ -169,6 +171,8 @@ EMAIL_HOST_PASSWORD = 'noreply13'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+ULOGIN_FIELDS = ['first_name', 'last_name', 'email']
 
 try:
     from dev import *

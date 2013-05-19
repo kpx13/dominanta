@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^ckeditor/', include('ckeditor.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^settings/', include('livesettings.urls')),
+    url(r'^ulogin/', include('django_ulogin.urls')),
 
 
     url(r'^$' , views.home_page),
