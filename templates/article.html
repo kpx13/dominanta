@@ -1,4 +1,5 @@
 {% load mptt_tags %}
+{% load ulogin_tags %}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -15,8 +16,12 @@
 <div class="wrapper">
     <div class="header">
         <div class="b-cabinet">
-            <a class="b-cabinet__entry" href="#">Войти</a>
-            <a class="b-cabinet__reg" href="#">Регистрация</a>
+        {% if request.user.is_authenticated %}
+            <p>Hi, {{ request.user.first_name }} {{request.user.last_name }}!</p>
+            <p><a href="/logout">Logout</a></p>
+        {% else %}
+            {% ulogin_widget %}
+        {% endif %}
             <input class="b-cabinet__search" type="text" value="Поиск по сайту"/>
         </div>
         <ul class="nav-top" >
