@@ -5,6 +5,7 @@ from ckeditor.fields import RichTextField
 import pytils
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItem
+import datetime
 
 
 class Category(MPTTModel):
@@ -73,8 +74,6 @@ class ArticleTaggedItem(TaggedItem):
     def tag_model(cls):
         return ArticleTag
     
-    
-    
 
 class Article(models.Model):
     category = models.ManyToManyField(Category, verbose_name=u'категория')
@@ -115,3 +114,17 @@ class Article(models.Model):
             return []
         else:
             return list(Article.objects.filter(tags__slug__in=[tag]))
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, verbose_name=u'статья', related_name='comment')
+    name = models.CharField(max_length=128, verbose_name=u'имя')
+    date = models.DateTimeField(auto_now=True, verbose_name=u'дата')
+    text = models.TextField(verbose_name=u'контент')
+    show = models.BooleanField(default=True, blank=True, verbose_name=u'показывать?')
+    class Meta:
+        verbose_name = u'комментарий'
+        verbose_name_plural = u'комментарии'
+        ordering = ['date']
+    
+    def __unicode__(self):
+        return self.name

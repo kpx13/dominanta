@@ -1,19 +1,28 @@
-<title>{% block title %}{% endblock %}</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}Доминанта Здоровья{% endblock %}</title>
+    
+<!--     <link type="text/css" rel="stylesheet" href="/static/css/reset.css"/> -->
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css"/>
+     
+    {% block extended_head %}
+    {% endblock %}
+</head>
+    <body>
+        <div class="container">
+            {% block wrapper %}
+            {% endblock %}
 
-{% block extended_head %}
-{% endblock %}
-
-{% if messages %}
-    <div>
-    {% for message in messages %}
-        <div class='message-wrapper'>
-            <div class="alert alert-{{ message.tags }}">
-                {{ message|safe }}
+            <div class='row'>
+                <div class='span12'>
+                    <hr />
+                    Здесь футер
+                </div>
             </div>
         </div>
-    {% endfor %}
-    </div>
-{% endif %}
-
-{% block content %}
-{% endblock %}
+    </body> 
+</html>
