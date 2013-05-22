@@ -61,11 +61,12 @@ def article_page(request, category, name):
     descendants = c['category'].get_descendants(include_self=True)
     
     c['article'] = Article.objects.get(slug=name, category__in=descendants)
-    categoies = c['article'].category.all()
+    categories = c['article'].category.all()
     curr_cat = None
-    for cat in categoies:
+    for cat in categories:
         if cat in descendants:
             curr_cat = cat
+    c['articles'] = Article.objects.filter(category__in=categories)
     
     c['breadcrumb'] = []
     while curr_cat:

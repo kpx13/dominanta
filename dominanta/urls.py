@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^settings/', include('livesettings.urls')),
     url(r'^ulogin/', include('django_ulogin.urls')),
+    url(r'^logout/',  'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
 
 
     url(r'^$' , views.home_page),
@@ -31,8 +32,5 @@ urlpatterns = patterns('',
     url(r'^tags/(?P<tag>[\w-]+)/$' , views.tags_page),
     
     url(r'^(?P<page_name>[\w-]+)/$' , views.other_page),
-    
-    
-    
     
 )

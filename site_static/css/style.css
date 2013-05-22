@@ -19,7 +19,7 @@
     text-decoration: none;
 }
 .wrapper_main{
-    background: url("../img/1.jpg") no-repeat 0 25px;
+   
 }
 .nav-main{
     width:450px;
@@ -120,17 +120,17 @@
     left: 192px;
 }
 .nav-main_foot .nav-main__l_7{
-    left: 74px;
+    left: 0px;
     top: 21px;
 }
 .nav-main_foot .nav-main__l_8{
-    margin-left: 363px;
+    margin-left: 339px;
     top: 2px;
 }
 
 .nav-main_foot .nav-main__l_9{
     margin-left: 320px;
-    top:17px;
+    top:20px;
 }
 
 .nav-main_foot{
