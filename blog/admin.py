@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 import models
-    
+from django.db import models as django_models
+from django.forms import CheckboxSelectMultiple
 from mptt.admin import MPTTModelAdmin
 
 class CommentInline(admin.StackedInline): 
@@ -20,6 +21,9 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = ('name', 'date', 'text')
     search_fields = ('name', 'text')
     ordering = ('date', )
+    formfield_overrides = {
+        django_models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
 
 
 
