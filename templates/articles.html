@@ -22,7 +22,7 @@
             <span class="b-info__tags">{{ a.date }}</span>
             {{ a.desc|safe }}
             <a href="/article/{{ category.slug }}/{{ a.slug }}/">(подробнее...&hellip;)</a>
-            <span class="b-info__tags b-info__tags_bottom"><a href="#">Комментариев (8)</a> &lt;тэги:
+            <span class="b-info__tags b-info__tags_bottom">Комментариев ({{ a.comment.count }}) &lt;тэги:
                 {% for t in a.tags.all %}
                     <a href="/tags/{{ t.slug }}/">{{ t.name }}</a>,
                 {% endfor %}
@@ -31,4 +31,25 @@
     {% empty %}
         <h4>В этой категории нет статей.</h4>
     {% endfor %}
+    
+    {% if need_pagination %}
+        <div class="pagination" >
+            <ul> 
+                <li {% if not articles.has_previous %} class="disabled" {% endif %}>
+                    <a href="{{ get_request }}?page={{ articles.previous_page_number }}">&laquo;</a>
+                </li>
+            
+                {% for p in page_range %}
+                    <li {% if p == articles.number %} class='active' {% endif %}>
+                        <a href="{{ get_request }}?page={{ p }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+            
+            
+                <li {% if not articles.has_next %} class="disabled" {% endif %}>
+                    <a href="{{ get_request }}?page={{ articles.next_page_number }}">&raquo;</a>
+                </li>
+            </ul>
+        </div><!--.page_navigation-->
+    {% endif %}
 {% endblock %}

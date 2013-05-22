@@ -20,10 +20,25 @@
             <a class="b-info__title" href="/article/{{ category.slug }}/{{ article.slug }}/">{{ article.name }}</a>
             <span class="b-info__tags">{{ article.date }}</span>
             {{ article.text|safe }}
-            <span class="b-info__tags b-info__tags_bottom"><a href="#">Комментариев (8)</a> &lt;тэги:
+            <span class="b-info__tags b-info__tags_bottom">&lt;тэги:
                 {% for t in article.tags.all %}
                     <a href="/tags/{{ t.slug }}/">{{ t.name }}</a>,
                 {% endfor %}
             &gt; </span>
+            {% if request.user.is_authenticated %}
+                <h3>Написать комментарий</h3>
+                <form action='' method='POST' class='well'>
+                    {% csrf_token %}
+                    <textarea name='text' style='width: 645px'></textarea><br />
+                    <input type='submit' name='send_comment' value='Отправить' class='span2 btn' />
+                </form>
+            {% else %}
+                <h4>Чтобы написать комментарий, войдите {% include 'ulogin.html' %}</h4>
+            {% endif %}
+            
+            <h3>Комментарии ({{ article.comment.count }})</h3>
+            {% for c in article.comment.all %}
+                <p style='margin-left: 20px'><b>{{ c.name }}</b>: <br />{{ c.text }}<br /><i>{{ c.date }}</i></p>
+            {% endfor %}
         </div>
 {% endblock %}

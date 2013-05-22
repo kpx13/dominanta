@@ -9,13 +9,11 @@
     font-style: normal;	
 } 
 
-.wrapper{
-    width:950px;
-    margin: 0 auto;
-    font-family: 'Franklin', sans-serif;
+.container{
+    
 }
 
-.wrapper a:hover{
+.container a:hover{
     text-decoration: none;
 }
 .wrapper_main{
@@ -43,7 +41,6 @@
     height:28px;
     float:right;
     display: block;
-    color:#d9d9d9;
     border: 1px solid #d9d9d9;
     border-radius:5px;
     outline: none;
@@ -55,13 +52,11 @@
 }
 .b-cabinet__entry{
     position:relative;
-    color:#272727;
     text-decoration: none;
     margin-right: 15px;
 }
 .b-cabinet__reg{
     position:relative;
-    color:#6d6d6d;
     text-decoration: none;
 }
 
@@ -75,6 +70,7 @@
 .nav-main li, .nav-top li, .nav-main_foot li, .nav-left li{
     display: inline-block;
     vertical-align: top;
+    font-family: 'Franklin', sans-serif;
 }
 .nav-main__l{
     text-transform: uppercase;
@@ -129,7 +125,7 @@
 }
 
 .nav-main_foot .nav-main__l_9{
-    margin-left: 320px;
+    margin-left: 310px;
     top:20px;
 }
 
@@ -138,11 +134,11 @@
 }
 .nav-top__l{
     display:inline-block;
-    margin-left: 10px;
+    margin-left: 0px;
 }
 .nav-top .nav-main__l{
     width:70px;
-    height:72px;
+    height:110px;
     margin-top: 10px;
     margin-left: 0px;
 }
@@ -156,30 +152,15 @@
 .nav-left{
     width:150px;
 }
-.content{
-    width:740px;
-    float:left;
-    padding-top: 30px;
-    font-size: 16px;
-    color: #000;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    line-height: 1.5;
-    padding-left: 110px;
-    padding-right: 30px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-}
+
 .nav-top{
-    padding-left: 85px;
+    padding-left: 0px;
 }
 .b-info__title{
     font-size: 26px;
-    font-family:Verdana, Arial, sans-Serif;
     letter-spacing: -0.8pt;
 }
 .b-info__tags{
-    font-family: Arial, Helvetica, Sans-Serif;
-    color: #777;
     font-size: 13px;
     display: block;
     margin:0px 0 15px 0;
@@ -195,7 +176,6 @@
     margin-bottom:50px;
 }
 .content a{
-    color:#0055cc;
 }
 
 .tag-cloud{text-align:center;}
