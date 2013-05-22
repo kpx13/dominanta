@@ -115,6 +115,7 @@ INSTALLED_APPS = (
     'feincms.module.medialibrary',
     'taggit',
     'django_ulogin',
+    'customize',
 
     'pages',
     'blog'
