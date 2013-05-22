@@ -72,8 +72,6 @@ def articles_page(request, category=None):
     
 def article_page(request, category, name):
     
-    
-    
     c = get_common_context(request)
     
     c['category'] = Category.get_by_slug(category)
