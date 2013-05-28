@@ -27,10 +27,11 @@ urlpatterns = patterns('',
 
 
     url(r'^$' , views.home_page),
-    url(r'^article/(?P<category>[\w-]*)/(?P<name>[\w-]+)/$' , views.article_page),
-    url(r'^articles/(?P<category>[\w-]+)/$' , views.articles_page),
-    url(r'^tags/(?P<tag>[\w-]+)/$' , views.tags_page),
-    
+    url(r'^article/(?P<id>[\w-]*)/$' , views.article_page),
+    url(r'^articles/category/(?P<id>[\w-]+)/$' , views.articles_page),
+    url(r'^articles/tag/(?P<id>[\w-]+)/$' , views.tags_page),
+    url(r'^search/$' , views.search_page),
+
     url(r'^(?P<page_name>[\w-]+)/$' , views.other_page),
     
 )

@@ -1,0 +1,11 @@
+<div class="well">
+        <ul class="tag-cloud">
+            {% for t in tags %}
+                {% if t.count < 8 %}
+                    <li><a class="tag-size-{{ t.count }}" href='/articles/tag/{{ t.id }}'>{{ t.nbsp|safe }}</a></li>
+                {% else %}
+                    <li><a class="tag-size-7" href='/articles/tag/{{ t.slug }}'>{{ t.nbsp|safe }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+</div>

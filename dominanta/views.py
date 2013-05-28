@@ -12,11 +12,14 @@ from livesettings import config_value
 from pages.models import Page
 from blog.models import Article, Category, ArticleTag, Comment
 
+PAGINATION_COUNT = 2
+
 def get_common_context(request):
     c = {}
     c['request_url'] = request.path
     c.update(csrf(request))
     c['tags'] = ArticleTag.objects.all()
+    c['top_menu'] = Category.objects.filter(show=True).order_by('order')
     return c
 
 def home_page(request):
@@ -34,6 +37,113 @@ def other_page(request, page_name):
     except:
         raise Http404()
 
+def article_page(request, id):
+    c = get_common_context(request)
+    c['article'] = Article.objects.get(id=id)
+    
+    if request.method == 'POST':
+        if request.POST['text']:
+            Comment(article=c['article'],
+                    name=request.user.first_name + ' ' + request.user.last_name,
+                    text=request.POST['text']).save()
+        return HttpResponseRedirect(request.path)
+    categories = c['article'].category.all().filter(show=True)
+
+    c['articles'] = Article.objects.filter(category__in=categories)
+    
+    c['breadcrumb'] = []
+    curr_cat = categories[0]
+    while curr_cat:
+        c['breadcrumb'].append(curr_cat)
+        curr_cat = curr_cat.parent
+    c['breadcrumb'].reverse()
+    return render_to_response('article.html', c, context_instance=RequestContext(request))
+
+def articles_page(request, id):
+    c = get_common_context(request)
+
+    c['category'] = Category.objects.get(id=id)
+    categories = c['category'].get_descendants(include_self=True)
+    c['sub_categories'] = c['category'].get_children()
+
+    c['breadcrumb'] = []
+    curr_cat = c['category']
+    while curr_cat:
+        c['breadcrumb'].append(curr_cat)
+        curr_cat = curr_cat.parent
+    c['breadcrumb'].reverse()
+    c['breadcrumb'] = c['breadcrumb'][:-1]
+    
+    items = Article.objects.filter(category__in=categories)
+    c['all_articles'] = items
+    
+    paginator = Paginator(items, PAGINATION_COUNT)
+    page = int(request.GET.get('page', '1'))
+    c['get_request'] = c['request_url'][:-1]
+    try:
+        c['articles'] = paginator.page(page)
+    except PageNotAnInteger:
+        page = 1
+        c['articles'] = paginator.page(page)
+    except EmptyPage:
+        page = paginator.num_pages
+        c['articles'] = paginator.page(page)
+    c['page'] = page
+    c['page_range'] = paginator.page_range
+    if len(c['page_range']) > 1:
+        c['need_pagination'] = True
+    return render_to_response('articles.html', c, context_instance=RequestContext(request))
+
+def tags_page(request, id):
+    c = get_common_context(request)
+    c['tag'] = ArticleTag.objects.get(id=id)
+    items = Article.get_by_tag(c['tag'])
+    
+    paginator = Paginator(items, 2)
+    page = int(request.GET.get('page', '1'))
+    c['get_request'] = c['request_url'][:-1]
+    try:
+        c['articles'] = paginator.page(page)
+    except PageNotAnInteger:
+        page = 1
+        c['articles'] = paginator.page(page)
+    except EmptyPage:
+        page = paginator.num_pages
+        c['articles'] = paginator.page(page)
+    c['page'] = page
+    c['page_range'] = paginator.page_range
+    if len(c['page_range']) > 1:
+        c['need_pagination'] = True
+        
+    return render_to_response('articles.html', c, context_instance=RequestContext(request))
+
+def search_page(request):
+    c = get_common_context(request)
+    if request.method == 'GET':
+        return render_to_response('articles.html', c, context_instance=RequestContext(request))
+    else:       
+        from fullsearch import search
+        items = search(request.POST.get('query', ''))
+        c['search_query'] = request.GET.get('query', '')
+        
+        paginator = Paginator(items, PAGINATION_COUNT)
+        page = int(request.POST.get('page', '1'))
+        c['get_request'] = c['request_url'][:-1]
+        try:
+            c['articles'] = paginator.page(page)
+        except PageNotAnInteger:
+            page = 1
+            c['articles'] = paginator.page(page)
+        except EmptyPage:
+            page = paginator.num_pages
+            c['articles'] = paginator.page(page)
+        c['page'] = page
+        c['page_range'] = paginator.page_range
+        if len(c['page_range']) > 1:
+            c['need_pagination'] = True
+        
+        return render_to_response('articles_search.html', c, context_instance=RequestContext(request)) 
+"""
 def articles_page(request, category=None):
     c = get_common_context(request)
     if category:
@@ -79,37 +189,4 @@ def articles_page(request, category=None):
         c['need_pagination'] = True
     return render_to_response('articles.html', c, context_instance=RequestContext(request))
     
-def article_page(request, category, name):
-    
-    c = get_common_context(request)
-    
-    c['category'] = Category.get_by_slug(category)
-    descendants = c['category'].get_descendants(include_self=True)
-    
-    c['article'] = Article.objects.get(slug=name, category__in=descendants)
-    if request.method == 'POST':
-        if request.POST['text']:
-            Comment(article=c['article'],
-                    name=request.user.first_name + ' ' + request.user.last_name,
-                    text=request.POST['text']).save()
-        return HttpResponseRedirect(request.path)
-    categories = c['article'].category.all()
-    curr_cat = None
-    for cat in categories:
-        if cat in descendants:
-            curr_cat = cat
-    c['articles'] = Article.objects.filter(category__in=categories)
-    
-    c['breadcrumb'] = []
-    while curr_cat:
-        c['breadcrumb'].append(curr_cat)
-        curr_cat = curr_cat.parent
-    c['breadcrumb'].reverse()
-    return render_to_response('article.html', c, context_instance=RequestContext(request))
-
-def tags_page(request, tag=None):
-    c = get_common_context(request)
-    c['articles'] = Article.get_by_tag(tag)
-    c['tag'] = ArticleTag.objects.filter(slug__in=[tag])[0]
-    c['category'] = Category.get_by_slug('mikst')
-    return render_to_response('articles.html', c, context_instance=RequestContext(request))
+"""

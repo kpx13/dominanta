@@ -25,13 +25,11 @@ def get_db_query(query):
 def search(query, items=None):
     cur = get_cursor()
     db_query = get_db_query(query)
-    print ' *** ', db_query
     SQL = u"SELECT id, ts_headline(name, to_tsquery('%s')), ts_headline(text, to_tsquery('%s')), ts_rank(tsv, to_tsquery('%s')) as rank from blog_article where tsv @@ to_tsquery('блок') ORDER BY rank DESC;" % (db_query, db_query, db_query)
     cur.execute(SQL)
     
     res = []
     for resp in cur.fetchall():
-        print resp[0], resp[1], resp[2]
         res.append({'id': resp[0],
                     'name': resp[1],
                     'text': resp[2]})

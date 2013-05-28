@@ -4,7 +4,7 @@
         {% if category %}
         <ul class="breadcrumb">
             {% for b in breadcrumb %} 
-                <li><a href='/articles/{{b.slug}}'>{{ b.name }}</a> <span class="divider">/</span></li>
+                <li><a href='/articles/category/{{b.id}}'>{{ b.name }}</a> <span class="divider">/</span></li>
             {% endfor %} 
             <li class="active">{{ article.name }}</li>
         </ul>
@@ -17,7 +17,7 @@
         {% endif %}
         
         <div class="b-info">
-            <a class="b-info__title" href="/article/{{ category.slug }}/{{ article.slug }}/">{{ article.name }}</a>
+            <h2>{{ article.name }}</h2>
             <span class="b-info__tags">{{ article.date }}</span>
             {{ article.text|safe }}
             <span class="b-info__tags b-info__tags_bottom">&lt;тэги:
@@ -41,4 +41,17 @@
                 <p style='margin-left: 20px'><b>{{ c.name }}</b>: <br />{{ c.text }}<br /><i>{{ c.date }}</i></p>
             {% endfor %}
         </div>
+{% endblock %}
+
+{% block right_content %}
+    {% if articles %}
+        <h5>Статьи из этой категории:</h5>
+        <ul class="nav nav-list">
+        {% for a in articles %}
+            <li><a href="/article/{{ a.id }}/">{{ a.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    
+    {% include 'tags_widget.html' %}
 {% endblock %}

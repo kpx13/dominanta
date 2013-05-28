@@ -14,6 +14,7 @@ class Category(MPTTModel):
     show = models.BooleanField(default=True, verbose_name=u'показывать на сайте')
     order = models.IntegerField(default=0, verbose_name=u'порядок')
     slug = models.SlugField(verbose_name=u'slug', blank=True, help_text=u'Заполнять не нужно')
+    icon = models.FileField(upload_to= 'uploads/icons', blank=True, max_length=256, verbose_name=u'иконка', help_text=u'Размер 85x87')
     
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -46,6 +47,7 @@ class ArticleTag(Tag):
         
     def save(self, *args, **kwargs):
         self.count = self.count + 1
+        self.slug = self.name.lower().replace(' ', '-')
         super(ArticleTag, self).save(*args, **kwargs)
         
     def nbsp(self):
@@ -109,11 +111,11 @@ class Article(models.Model):
         return list(Article.objects.all()[:count])
     
     @staticmethod
-    def get_by_tag(tag=None):
+    def get_by_tag(tag):
         if not tag:
             return []
         else:
-            return list(Article.objects.filter(tags__slug__in=[tag]))
+            return list(Article.objects.filter(tags__in=[tag]))
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, verbose_name=u'статья', related_name='comment')

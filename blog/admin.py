@@ -10,7 +10,7 @@ class CommentInline(admin.StackedInline):
     extra = 3
 
 class CategoryAdmin(MPTTModelAdmin):
-    list_display = (  'name', 'show', 'order', 'slug')
+    list_display = (  'name', 'id' , 'show', 'order', 'slug')
     search_fields = ('name', )
     mptt_level_indent = 20
 

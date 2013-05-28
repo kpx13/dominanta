@@ -1,47 +1,41 @@
 {% extends 'base_articles.html' %}
 
 {% block content %}
-    {% if category %}
-    <ul class="breadcrumb">
-        {% for b in breadcrumb %} 
-            <li><a href='/articles/{{b.slug}}'>{{ b.name }}</a> <span class="divider">/</span></li>
-        {% endfor %} 
-        <li class="active">{{ category.name }}</li>
-    </ul>
-    {% endif %}
-    
     <ul class="breadcrumb">
         <li class="active">Поиск: <b>{{ search_query }}</b></li>
     </ul>
     
     {% for a in articles %}
         <div class="b-info">
-            <a class="b-info__title" href="/article/{{ category.slug }}/{{ a.slug }}/">{{ a.name|safe }}</a><br />
+            <a class="b-info__title" href="/article/{{ a.id }}/">{{ a.name|safe }}</a><br />
             {{ a.text|safe }}
-            <a href="/article/{{ category.slug }}/{{ a.slug }}/">(подробнее...&hellip;)</a>
+            <a href="/article/{{ a.id }}/">(подробнее...&hellip;)</a>
         </div>
     {% empty %}
         <h4>Ничего не найдено.</h4>
     {% endfor %}
     
     {% if need_pagination %}
-        <div class="pagination" >
-            <ul> 
-                <li {% if not articles.has_previous %} class="disabled" {% endif %}>
-                    <a href="{{ get_request }}?page={{ articles.previous_page_number }}">&laquo;</a>
-                </li>
-            
-                {% for p in page_range %}
-                    <li {% if p == articles.number %} class='active' {% endif %}>
-                        <a href="{{ get_request }}?page={{ p }}">{{ p }}</a>
+        <form action='/search/' method='POST'>
+            <input type='hidden' name='query' value='search_query' >
+            {% csrf_token %}
+            <div class="pagination" >
+                <ul> 
+                    <li {% if not articles.has_previous %} class="disabled" {% endif %}>
+                        <button type='submit' name='page' value="{{ articles.previous_page_number }}">&laquo;</button>
                     </li>
-                {% endfor %}
-            
-            
-                <li {% if not articles.has_next %} class="disabled" {% endif %}>
-                    <a href="{{ get_request }}?page={{ articles.next_page_number }}">&raquo;</a>
-                </li>
-            </ul>
-        </div><!--.page_navigation-->
+                
+                    {% for p in page_range %}
+                        <li {% if p == articles.number %} class='active' {% endif %}>
+                            <button type='submit' name='page' value="{{ p }}">{{ p }}</button>
+                        </li>
+                    {% endfor %}
+                
+                    <li {% if not articles.has_next %} class="disabled" {% endif %}>
+                        <button type='submit' name='page' value="articles.next_page_number }}">&raquo;</button>
+                    </li>
+                </ul>
+            </div><!--.page_navigation-->
+        </form>
     {% endif %}
 {% endblock %}

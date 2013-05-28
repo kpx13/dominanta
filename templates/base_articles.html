@@ -3,29 +3,39 @@
 {% load mptt_tags %}
 
 {% block wrapper %}
+            
     <div class="row">
             <div class="span9">
                 <ul class="nav-top" >
-                    <li><a href="/articles/inkubator/" class="nav-main__l" ><img src="/static/img/9.jpg"/>Инкубатор</a></li>
-                    <li><a href="/articles/gl/" class="nav-main__l"><img src="/static/img/5.jpg"/>ГЛ</a></li>
-                    <li><a href="/articles/ultra/" class="nav-main__l"><img src="/static/img/2.jpg"/>Ультра</a></li>
-                    <li><a href="/articles/mikst/" class="nav-main__l"><img src="/static/img/4.jpg"/>МИКСТ</a></li>
-                    <li><a href="/articles/media/" class="nav-main__l"><img src="/static/img/6.jpg"/>Медиа</a></li>
-                    <li><a href="/articles/lajt/" class="nav-main__l"><img src="/static/img/3.jpg"/>Лайт</a></li>
-                    <li><a href="/articles/arhiv/" class="nav-main__l"><img src="/static/img/8.jpg"/>архив</a></li>
-                    <li><a href="/articles/potok-soznaniya/" class="nav-main__l"><img src="/static/img/7.jpg"/>поток сознания</a></li>
-                    <li><a href="/articles/polezno/" class="nav-main__l"><img src="/static/img/9.jpg"/>полезно</a></li>
+                    {% for m in top_menu %}
+                        <li><a href="/articles/category/{{ m.id }}/" class="nav-main__l" ><img src="/media/{{ m.icon }}"/>{{ m.name }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="span3" style='padding-top: 20px'>
                 {% include 'ulogin.html' %}
-                <form class="form-search">
+                <form class="form-search" style='float: right' action='/search/' method='POST'>
                     <div class="input-append">
-                    <input type="text" class="search-query" name='query' value='{{ search_query }}' style='height: 20px; width: 150px'>
-                    <button type="submit" class="btn" name='search'  style='height: 30px;'><i class='icon-search' ></i></button>
+                        <input type="text" id='search-input' class="search-query" name='query' value='{{ search_query }}' style='height: 20px; width: 150px'>
+                        <button type="submit" class="btn" name='search'  style='height: 30px;'><i class='icon-search' ></i></button>
                     </div>
+                    <div id='search-checkbox'  style='float: right; display: none'>
+                        <input type="checkbox" name='in_archive' >
+                        <label>искать в архиве</label>
+                    </div>
+                    {% csrf_token %}
                 </form>
             </div>
+            <script>
+                    $('.form-search').focusin(function(){
+                        $('#search-input').css('width', '200');
+                        $('#search-checkbox').css('display', 'inline')
+                    });
+                    $('.form-search').focusout(function(){
+                        $('#search-input').css('width', '150');
+//                         $('#search-checkbox').css('display', 'none')
+                    });
+            </script>
     </div>
     <div class="row">
         <div class="content span9">
@@ -34,38 +44,10 @@
         </div> 
         
         <div class='span3'>
-            {% if sub_categories %}
-                <h5>Категории:</h5>
-                <ul class="nav nav-list">
-                    <li class="nav-header">{{ category.name }}</li>
-                    {% for s in sub_categories %} 
-                        <li><a href='/articles/{{s.slug}}'>{{ s.name }}</a></li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-            
-            {% if articles %}
-                <h5>Статьи:</h5>
-                <ul class="nav nav-list">
-                {% for a in articles %}
-                    <li><a href="/article/{{ category.slug }}/{{ a.slug }}/">{{ a.name }}</a></li>
-                {% endfor %}
-                </ul>
-            {% endif %}
-            
-            
-            <div class="well">
-                    <ul class="tag-cloud">
-                        {% for t in tags %}
-                            {% if t.count < 8 %}
-                                <li><a class="tag-size-{{ t.count }}" href='/tags/{{ t.slug }}'>{{ t.nbsp|safe }}</a></li>
-                            {% else %}
-                                <li><a class="tag-size-7" href='/tags/{{ t.slug }}'>{{ t.nbsp|safe }}</a></li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-            </div>
+            {% block right_content %}
+            {% endblock %}
         </div>
    
      </div>
+     
 {% endblock %}

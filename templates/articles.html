@@ -4,7 +4,7 @@
     {% if category %}
     <ul class="breadcrumb">
         {% for b in breadcrumb %} 
-            <li><a href='/articles/{{b.slug}}'>{{ b.name }}</a> <span class="divider">/</span></li>
+            <li><a href='/articles/category/{{b.id}}'>{{ b.name }}</a> <span class="divider">/</span></li>
         {% endfor %} 
         <li class="active">{{ category.name }}</li>
     </ul>
@@ -18,13 +18,13 @@
     
     {% for a in articles %}
         <div class="b-info">
-            <a class="b-info__title" href="/article/{{ category.slug }}/{{ a.slug }}/">{{ a.name }}</a>
+            <a class="b-info__title" href="/article/{{ a.id }}/">{{ a.name }}</a>
             <span class="b-info__tags">{{ a.date }}</span>
             {{ a.desc|safe }}
-            <a href="/article/{{ category.slug }}/{{ a.slug }}/">(подробнее...&hellip;)</a>
+            <a href="/article/{{ a.id }}/">(подробнее...&hellip;)</a>
             <span class="b-info__tags b-info__tags_bottom">Комментариев ({{ a.comment.count }}) &lt;тэги:
                 {% for t in a.tags.all %}
-                    <a href="/tags/{{ t.slug }}/">{{ t.name }}</a>,
+                    <a href="/articles/tag/{{ t.id }}/">{{ t.name }}</a>,
                 {% endfor %}
             &gt; </span>
         </div>
@@ -52,4 +52,27 @@
             </ul>
         </div><!--.page_navigation-->
     {% endif %}
+{% endblock %}
+
+{% block right_content %}
+    {% if sub_categories %}
+        <h5>Категории:</h5>
+        <ul class="nav nav-list">
+            <li class="nav-header">{{ category.name }}</li>
+            {% for s in sub_categories %} 
+                <li><a href='/articles/category/{{s.id}}'>{{ s.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    {% if all_articles %}
+        <h5>Статьи:</h5>
+        <ul class="nav nav-list">
+        {% for a in all_articles %}
+            <li><a href="/article/{{ a.id }}/">{{ a.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    
+    {% include 'tags_widget.html' %}
 {% endblock %}
