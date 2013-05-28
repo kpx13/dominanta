@@ -4,10 +4,6 @@
 
 {% block wrapper %}
     <div class="row">
-            <div class="b-cabinet span3">
-                {% include 'ulogin.html' %}
-                <input class="b-cabinet__search" type="text" value="Поиск по сайту"/>
-            </div>
             <div class="span9">
                 <ul class="nav-top" >
                     <li><a href="/articles/inkubator/" class="nav-main__l" ><img src="/static/img/9.jpg"/>Инкубатор</a></li>
@@ -20,6 +16,15 @@
                     <li><a href="/articles/potok-soznaniya/" class="nav-main__l"><img src="/static/img/7.jpg"/>поток сознания</a></li>
                     <li><a href="/articles/polezno/" class="nav-main__l"><img src="/static/img/9.jpg"/>полезно</a></li>
                 </ul>
+            </div>
+            <div class="span3" style='padding-top: 20px'>
+                {% include 'ulogin.html' %}
+                <form class="form-search">
+                    <div class="input-append">
+                    <input type="text" class="search-query" name='query' value='{{ search_query }}' style='height: 20px; width: 150px'>
+                    <button type="submit" class="btn" name='search'  style='height: 30px;'><i class='icon-search' ></i></button>
+                    </div>
+                </form>
             </div>
     </div>
     <div class="row">

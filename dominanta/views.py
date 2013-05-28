@@ -52,6 +52,15 @@ def articles_page(request, category=None):
         items = Article.objects.filter(category__in=categories)
     else:
         items = Article.objects.all()
+        
+        
+    # search
+    if 'search' in request.GET:
+        from fullsearch import search
+        items = search(request.GET['query'])
+        c['search_query'] = request.GET.get('query', '')
+        c['articles'] = items
+        return render_to_response('articles_search.html', c, context_instance=RequestContext(request))
     
     paginator = Paginator(items, 2)
     page = int(request.GET.get('page', '1'))
