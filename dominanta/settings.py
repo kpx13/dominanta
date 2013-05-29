@@ -118,7 +118,8 @@ INSTALLED_APPS = (
     'customize',
 
     'pages',
-    'blog'
+    'blog',
+    'archive'
 )
 
 

@@ -142,7 +142,12 @@ def search_page(request):
         if len(c['page_range']) > 1:
             c['need_pagination'] = True
         
-        return render_to_response('articles_search.html', c, context_instance=RequestContext(request)) 
+        return render_to_response('articles_search.html', c, context_instance=RequestContext(request))
+    
+def archive_page(request):
+    c = get_common_context(request)
+    return render_to_response('archive_home.html', c, context_instance=RequestContext(request))
+ 
 """
 def articles_page(request, category=None):
     c = get_common_context(request)

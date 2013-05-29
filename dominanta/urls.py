@@ -31,6 +31,7 @@ urlpatterns = patterns('',
     url(r'^articles/category/(?P<id>[\w-]+)/$' , views.articles_page),
     url(r'^articles/tag/(?P<id>[\w-]+)/$' , views.tags_page),
     url(r'^search/$' , views.search_page),
+    url(r'^archive/$' , views.archive_page),
 
     url(r'^(?P<page_name>[\w-]+)/$' , views.other_page),
     
