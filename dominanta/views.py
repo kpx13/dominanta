@@ -125,7 +125,7 @@ def search_page(request):
     else:       
         from fullsearch import search
         items = search(request.POST.get('query', ''))
-        c['search_query'] = request.GET.get('query', '')
+        c['search_query'] = request.POST.get('query', '')
         
         paginator = Paginator(items, PAGINATION_COUNT)
         page = int(request.POST.get('page', '1'))
