@@ -1,56 +1,23 @@
-{% extends 'base.html' %}
+{% extends 'archive.html' %}
 
-{% load mptt_tags %}
+{% block content_top %}
+    <ul class="nav nav-pills">
+        {% for item in filetypes %}
+            <li><a href='/archive/filetype/{{ item.id }}'>{{ item.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
 
-{% block wrapper %}
-            
-    <div class="row">
-            <div class="span9">
-                <div class='well'>
-                </div>
-            </div>
-            <div class="span3" style='padding-top: 20px'>
-                {% include 'ulogin.html' %}
-                <form class="form-search" style='float: right' action='/search/' method='POST'>
-                    <div class="input-append">
-                        <input type="text" id='search-input' class="search-query" name='query' value='{{ search_query }}' style='height: 20px; width: 150px'>
-                        <button type="submit" class="btn" name='search'  style='height: 30px;'><i class='icon-search' ></i></button>
-                    </div>
-                    <div id='search-checkbox'  style='float: right; display: none'>
-                        <input type="checkbox" name='in_archive' >
-                        <label>искать в архиве</label>
-                    </div>
-                    {% csrf_token %}
-                </form>
-            </div>
-            <script>
-                    $('.form-search').focusin(function(){
-                        $('#search-input').css('width', '200');
-                        $('#search-checkbox').css('display', 'inline')
-                    });
-                    $('.form-search').focusout(function(){
-                        $('#search-input').css('width', '150');
-//                         $('#search-checkbox').css('display', 'none')
-                    });
-            </script>
-    </div>
-    <div class="row">
-        <div class="content span8">
-            {% block content %}
-                <div class='well'>
-                    <h2>Медспециальности</h2>
-                </div>
-            {% endblock %}
-        </div> 
-        
-        <div class='span4'>
-            {% block right_content %}
-                <div class='well'>
-                    <h2>Доклиника</h2>
-                </div>
-            {% endblock %}
-        </div>
-   
-     </div>
-     
+{% block content %}
+    <h2>Медспециальности</h2>
+    {% for item in medspec %}
+        <a href='/archive/category/{{ item.id }}' data-toggle="tooltip" data-placement="right" title="{{ item.name }}"><img src='/media/{{ item.icon }}' alt='{{ item.name }}'  /></a>
+    {% endfor %}
+{% endblock %}
+
+{% block right_content %}
+    <h2>Доклиника</h2>
+    {% for item in dokl %}
+        <a href='/archive/category/{{ item.id }}' data-toggle="tooltip" data-placement="right" title="{{ item.name }}"><img src='/media/{{ item.icon }}' alt='{{ item.name }}'  /></a>
+    {% endfor %}
 {% endblock %}

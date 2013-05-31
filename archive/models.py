@@ -14,7 +14,7 @@ class Specialty(MPTTModel):
     show = models.BooleanField(default=True, verbose_name=u'показывать на сайте')
     order = models.IntegerField(default=0, verbose_name=u'порядок')
     slug = models.SlugField(verbose_name=u'slug', blank=True, help_text=u'Заполнять не нужно')
-    icon = models.FileField(upload_to= 'uploads/icons', blank=True, max_length=256, verbose_name=u'иконка', help_text=u'Размер 85x87')
+    icon = models.FileField(upload_to= 'uploads/icons', default='uploads/icons/default_icon.jpg', blank=True, max_length=256, verbose_name=u'иконка', help_text=u'Размер 85x87')
     
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -29,12 +29,12 @@ class Specialty(MPTTModel):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug=pytils.translit.slugify(self.name)
-        super(Category, self).save(*args, **kwargs)
+        super(Specialty, self).save(*args, **kwargs)
         
     @staticmethod
     def get_by_slug(slug):
         try:
-            return Category.objects.get(slug=slug)
+            return Specialty.objects.get(slug=slug)
         except:
             return None
         
@@ -58,7 +58,7 @@ class ArchiveFile(models.Model):
     date = models.DateField(auto_now=True, verbose_name=u'дата')
     desc = models.CharField(max_length=512, blank=True, verbose_name=u'описание')
     filetype = models.ForeignKey(FileType, verbose_name=u'тип файла')
-    file = models.FileField(upload_to= 'uploads/archive', blank=True, max_length=256, verbose_name=u'иконка', help_text=u'')
+    file = models.FileField(upload_to= 'uploads/archive', blank=True, max_length=256, verbose_name=u'файл', help_text=u'')
     slug = models.SlugField(verbose_name=u'slug', blank=True, help_text=u'Заполнять не нужно')
     
     class Meta:
@@ -72,7 +72,7 @@ class ArchiveFile(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug=pytils.translit.slugify(self.name)
-        super(Article, self).save(*args, **kwargs)
+        super(ArchiveFile, self).save(*args, **kwargs)
         
     @staticmethod
     def get_by_slug(slug):

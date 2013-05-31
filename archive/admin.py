@@ -5,7 +5,7 @@ from django.db import models as django_models
 from django.forms import CheckboxSelectMultiple
 from mptt.admin import MPTTModelAdmin
 
-class FileInline(admin.StackedInline): 
+class FileInline(admin.TabularInline): 
     model = models.ArchiveFile
     extra = 3
 
@@ -15,7 +15,7 @@ class SpecialtyAdmin(MPTTModelAdmin):
     search_fields = ('name', )
     mptt_level_indent = 20
 
-class FileTypeAdmin(MPTTModelAdmin):
+class FileTypeAdmin(admin.ModelAdmin):
     inlines = [FileInline, ]
     list_display = ( 'name', 'id' , 'show', 'order')
     search_fields = ('name', )
@@ -23,3 +23,4 @@ class FileTypeAdmin(MPTTModelAdmin):
 
 admin.site.register(models.Specialty, SpecialtyAdmin)
 admin.site.register(models.FileType, FileTypeAdmin)
+admin.site.register(models.ArchiveFile)

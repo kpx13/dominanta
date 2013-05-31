@@ -11,6 +11,7 @@ from livesettings import config_value
 
 from pages.models import Page
 from blog.models import Article, Category, ArticleTag, Comment
+from archive.models import Specialty, FileType, ArchiveFile
 
 PAGINATION_COUNT = 2
 
@@ -146,7 +147,22 @@ def search_page(request):
     
 def archive_page(request):
     c = get_common_context(request)
+    c['filetypes'] = FileType.objects.filter(show=True).order_by('order')
+    c['medspec'] = Specialty.objects.get(slug='medspetsialnosti').get_children().filter(show=True).order_by('order')
+    c['dokl'] = Specialty.objects.get(slug='doklinika').get_children().filter(show=True).order_by('order')
     return render_to_response('archive_home.html', c, context_instance=RequestContext(request))
+
+def archive_filetype_page(request, id):
+    c = get_common_context(request)
+    c['filetype'] = FileType.objects.get(id=id)
+    c['files'] =  ArchiveFile.objects.filter(filetype=id)
+    return render_to_response('archive_filetype.html', c, context_instance=RequestContext(request))
+ 
+def archive_category_page(request, id):
+    c = get_common_context(request)
+    c['category'] = Specialty.objects.get(id=id)
+    c['files'] =  ArchiveFile.objects.filter(category=id)
+    return render_to_response('archive_category.html', c, context_instance=RequestContext(request))
  
 """
 def articles_page(request, category=None):
