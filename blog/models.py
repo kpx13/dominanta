@@ -14,7 +14,7 @@ class Category(MPTTModel):
     show = models.BooleanField(default=True, verbose_name=u'показывать на сайте')
     order = models.IntegerField(default=0, verbose_name=u'порядок')
     slug = models.SlugField(verbose_name=u'slug', blank=True, help_text=u'Заполнять не нужно')
-    icon = models.FileField(upload_to= 'uploads/icons', blank=True, max_length=256, verbose_name=u'иконка', help_text=u'Размер 85x87')
+    icon = models.FileField(upload_to= 'uploads/icons', default='uploads/icons/default_icon.jpg', blank=True, max_length=256, verbose_name=u'иконка', help_text=u'Размер 85x87')
     
     class MPTTMeta:
         order_insertion_by = ['name']
