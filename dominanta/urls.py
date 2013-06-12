@@ -23,8 +23,9 @@ urlpatterns = patterns('',
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^settings/', include('livesettings.urls')),
     url(r'^ulogin/', include('django_ulogin.urls')),
+    
     url(r'^logout/',  'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
-
+    url(r'^accounts/', include('registration.urls'), {'extra_context': views.context()}),
 
     url(r'^$' , views.home_page),
     url(r'^article/(?P<id>[\w-]*)/$' , views.article_page),

@@ -25,6 +25,10 @@
                     <a href="/tags/{{ t.slug }}/">{{ t.name }}</a>,
                 {% endfor %}
             &gt; </span>
+            <div class="share42init"></div>
+                            <script type="text/javascript" src="/static/js/share42/share42.js"></script>
+                            <script type="text/javascript">share42('/static/js/share42/')</script>
+            
             {% if request.user.is_authenticated %}
                 <h3>Написать комментарий</h3>
                 <form action='' method='POST' class='well'>

@@ -11,7 +11,7 @@
         <div class="b-info">
             <a href="/media/{{ a.file }}/" target='_blank'><h4>{{ a.name }}</h4></a>
             <h5>{{ a.category.name }}</h5>
-            <p>{{ a.desc|safe }}</p>
+            <p>{{ a.text|safe }}</p>
             <a href="/media/{{ a.file }}/" target='_blank'>Скачать...</a>
         </div>
     {% empty %}

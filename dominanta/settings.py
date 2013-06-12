@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     'mptt',
     'feincms.module.medialibrary',
     'taggit',
+    'registration',
     'django_ulogin',
     'customize',
 
@@ -175,6 +176,11 @@ EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 ULOGIN_FIELDS = ['first_name', 'last_name', 'email']
+ULOGIN_DISPLAY = 'panel'
+#ULOGIN_CALLBACK = 'callback'
+LOGIN_REDIRECT_URL = '/'
+
+ACCOUNT_ACTIVATION_DAYS = 2
 
 try:
     from dev import *

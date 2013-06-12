@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block extended_head %}
+<!--     <script>function callback(){console.log('***');}</script> -->
+{% endblock %}
+
+{% block wrapper %}
+            
+    <div class="row">
+        <div class="content span12">
+            {% block content %}
+            {% endblock %}
+        </div> 
+    </div>
+     
+{% endblock %}

@@ -14,29 +14,10 @@
                 </ul>
             </div>
             <div class="span3" style='padding-top: 20px'>
-                {% include 'ulogin.html' %}
-                <form class="form-search" style='float: right' action='/search/' method='POST'>
-                    <div class="input-append">
-                        <input type="text" id='search-input' class="search-query" name='query' value='{{ search_query }}' style='height: 20px; width: 150px'>
-                        <button type="submit" class="btn" name='search'  style='height: 30px;'><i class='icon-search' ></i></button>
-                    </div>
-                    <div id='search-checkbox'  style='float: right; display: none'>
-                        <input type="checkbox" name='in_archive' >
-                        <label>искать в архиве</label>
-                    </div>
-                    {% csrf_token %}
-                </form>
+                {% include 'login.html' %}
+                {% include 'search_form.html' %}
             </div>
-            <script>
-                    $('.form-search').focusin(function(){
-                        $('#search-input').css('width', '200');
-                        $('#search-checkbox').css('display', 'inline')
-                    });
-                    $('.form-search').focusout(function(){
-                        $('#search-input').css('width', '150');
-//                         $('#search-checkbox').css('display', 'none')
-                    });
-            </script>
+           
     </div>
     <div class="row">
         <div class="content span9">

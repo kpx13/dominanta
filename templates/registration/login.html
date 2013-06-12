@@ -1,0 +1,49 @@
+{% extends "registration/base.html" %}
+
+{% block content %}
+
+    <div class="row">
+        {% if request.user.is_authenticated %}
+            <div class='span12'>
+                <p>Вы зашли как <u>{{ request.user.first_name }} {{request.user.last_name }}</u></p>
+                <p><a href="/">На главную</a></p>
+                <p><a href="{% url logout %}">Выйти</a></p>
+            </div>
+        {% else %}
+        
+            <div class="span6">
+                
+                    <h2>Войти</h2>
+                    <h4>Вы можете войти через соц. сети<h4>
+                    {% load ulogin_tags %}
+                    {% ulogin_widget %}
+                    
+                    <h4>Или через авторизацию<h4>
+                    <form method='post' action='/accounts/login/'>
+                        <table class="request">
+                            {{ form.as_table }}
+                            <tr><td></td><td><input type="submit" value="Вход" /></td></tr>
+                            <input type="hidden" name="action" value="login" />
+                        </table>
+                        {% csrf_token %}
+                        
+                    </form>
+                
+                
+            </div> 
+            
+            <div class='span6'>
+                <h2>Регистрация</h2>
+                <form method='post' action='/accounts/register/'>
+                    <table class="request">
+                        {{ registration_form.as_table }}
+                        <tr><td></td><td><input type="submit" value="Зарегистрироваться" /></td></tr>
+                    </table>
+                    {% csrf_token %}
+                    
+                </form>
+            </div>
+        {% endif %}
+     </div>
+
+{% endblock %}

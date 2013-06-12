@@ -2,6 +2,8 @@
 
 import datetime
 from django.core.context_processors import csrf
+from django.contrib.auth.forms import AuthenticationForm
+from registration.forms import RegistrationForm
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404, HttpResponseRedirect
@@ -22,6 +24,17 @@ def get_common_context(request):
     c['tags'] = ArticleTag.objects.all()
     c['top_menu'] = Category.objects.filter(show=True).order_by('order')
     return c
+
+def context():
+    c = {}
+    c['authentication_form'] = AuthenticationForm()
+    c['registration_form'] = RegistrationForm()
+    return c
+
+def login_page(request):
+    c = get_common_context(request)
+    c['request_url'] = request.path
+    return render_to_response('registry.html', c, context_instance=RequestContext(request))
 
 def home_page(request):
     c = get_common_context(request)
@@ -127,7 +140,7 @@ def search_page(request):
         items = search(request.POST.get('query', ''))
             
         c['search_query'] = request.POST.get('query', '')
-        
+        """
         paginator = Paginator(items, PAGINATION_COUNT)
         page = int(request.POST.get('page', '1'))
         c['get_request'] = c['request_url'][:-1]
@@ -143,7 +156,8 @@ def search_page(request):
         c['page_range'] = paginator.page_range
         if len(c['page_range']) > 1:
             c['need_pagination'] = True
-        
+        """
+        c['articles'] = items
         return render_to_response('articles_search.html', c, context_instance=RequestContext(request))
     
 def archive_page(request):

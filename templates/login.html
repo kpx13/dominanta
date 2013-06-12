@@ -1,7 +1,5 @@
-{% load ulogin_tags %}
-
 {% if request.user.is_authenticated %}
     <p>Вы зашли как <u>{{ request.user.first_name }} {{request.user.last_name }}</u> / <a href="{% url logout %}">Выйти</a></p>
 {% else %}
-    {% ulogin_widget %}
+    <a href='/accounts/register/'>Вход / Регистрация</a>
 {% endif %}

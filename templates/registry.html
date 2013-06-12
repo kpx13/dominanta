@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block wrapper %}
+    <div class="row">
+        <div class="span6">
+            <h2>Войти</h2>
+            <h4>Вы можете войти через соц. сети<h4>
+            {% load ulogin_tags %}
+            {% ulogin_widget %}
+            
+            <h4>Или через авторизацию<h4>
+        </div> 
+        
+        <div class='span6'>
+            <h2>Регистрация</h2>
+        </div>
+   
+     </div>
+{% endblock %}
