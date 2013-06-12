@@ -13,7 +13,7 @@ class Category(MPTTModel):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', verbose_name=u'родитель')
     show = models.BooleanField(default=True, verbose_name=u'показывать на сайте')
     order = models.IntegerField(default=0, verbose_name=u'порядок')
-    slug = models.SlugField(verbose_name=u'slug', blank=True, help_text=u'Заполнять не нужно')
+    slug = models.SlugField(max_length=50, verbose_name=u'slug', blank=True, help_text=u'Заполнять не нужно')
     icon = models.FileField(upload_to= 'uploads/icons', default='uploads/icons/default_icon.jpg', blank=True, max_length=256, verbose_name=u'иконка', help_text=u'Размер 85x87')
     
     class MPTTMeta:
@@ -84,7 +84,7 @@ class Article(models.Model):
     text = RichTextField(verbose_name=u'контент')
     desc = RichTextField(max_length=512, verbose_name=u'вступительный контент')
     tags = TaggableManager(blank=True, through=ArticleTaggedItem)
-    slug = models.SlugField(max_length=200, verbose_name=u'slug', unique=True, blank=True, help_text=u'Заполнять не нужно')
+    slug = models.SlugField(max_length=128, verbose_name=u'slug', unique=True, blank=True, help_text=u'Заполнять не нужно')
    
     class Meta:
         verbose_name = u'статья'
