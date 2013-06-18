@@ -37,7 +37,7 @@
                     <input type='submit' name='send_comment' value='Отправить' class='span2 btn' />
                 </form>
             {% else %}
-                <h4>Чтобы написать комментарий, войдите {% include 'ulogin.html' %}</h4>
+                <h4>Чтобы написать комментарий, <a href='/accounts/register/'>войдите</a></h4>
             {% endif %}
             
             <h3>Комментарии ({{ article.comment.count }})</h3>
