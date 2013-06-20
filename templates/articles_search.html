@@ -27,9 +27,9 @@
     <div class="tab-pane {% if archive_active %} active {% endif %}" id="tab2">
       {% for a in archive %}
             <div class="b-info">
-                <a class="b-info__title" href="/article/{{ a.id }}/">{{ a.name|safe }}</a><br />
+                <a href="/media/{{ a.file }}/" target='_blank'>{{ a.name|safe }}</a><br />
                 {{ a.text|safe }}
-                <a href="/article/{{ a.id }}/">(подробнее...&hellip;)</a>
+                <a href="/media/{{ a.file }}/" target='_blank'>(подробнее...&hellip;)</a>
             </div>
         {% empty %}
             <h4>Ничего не найдено.</h4>
