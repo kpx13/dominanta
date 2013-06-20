@@ -138,8 +138,11 @@ def search_page(request):
     else:       
         from fullsearch import search_articles, search_archive
         items_articles = search_articles(request.POST.get('query', ''))
-        items_archive = search_archive(request.POST.get('query', ''))
-        
+        in_archive = request.POST.get('in_archive', False)
+        if in_archive:
+            items_archive = search_archive(request.POST.get('query', ''))
+            c['archive'] = items_archive
+            c['archive_active'] = False
         
         c['search_query'] = request.POST.get('query', '')
         """
@@ -160,13 +163,14 @@ def search_page(request):
             c['need_pagination'] = True
         """
         c['articles'] = items_articles
-        c['archive'] = items_archive
         c['articles_active'] = False
-        c['archive_active'] = False
+        c['show_tab'] = False
         if len(items_articles) > 0:
             c['articles_active'] = True
         else:
             c['archive_active'] = True
+        if in_archive:
+            c['show_tab'] = True
         
         return render_to_response('articles_search.html', c, context_instance=RequestContext(request))
     
