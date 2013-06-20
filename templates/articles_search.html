@@ -5,15 +5,38 @@
         <li class="active">Поиск: <b>{{ search_query }}</b></li>
     </ul>
     
-    {% for a in articles %}
-        <div class="b-info">
-            <a class="b-info__title" href="/article/{{ a.id }}/">{{ a.name|safe }}</a><br />
-            {{ a.text|safe }}
-            <a href="/article/{{ a.id }}/">(подробнее...&hellip;)</a>
-        </div>
-    {% empty %}
-        <h4>Ничего не найдено.</h4>
-    {% endfor %}
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-tabs">
+    <li class="{% if articles_active %} active {% endif %}"><a href="#tab1" data-toggle="tab">По статьям</a></li>
+    <li class="{% if archive_active %} active {% endif %}"><a href="#tab2" data-toggle="tab">В архиве</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane {% if articles_active %} active {% endif %}" id="tab1">
+        {% for a in articles %}
+            <div class="b-info">
+                <a class="b-info__title" href="/article/{{ a.id }}/">{{ a.name|safe }}</a><br />
+                {{ a.text|safe }}
+                <a href="/article/{{ a.id }}/">(подробнее...&hellip;)</a>
+            </div>
+        {% empty %}
+            <h4>Ничего не найдено.</h4>
+        {% endfor %}
+    </div>
+    <div class="tab-pane {% if archive_active %} active {% endif %}" id="tab2">
+      {% for a in archive %}
+            <div class="b-info">
+                <a class="b-info__title" href="/article/{{ a.id }}/">{{ a.name|safe }}</a><br />
+                {{ a.text|safe }}
+                <a href="/article/{{ a.id }}/">(подробнее...&hellip;)</a>
+            </div>
+        {% empty %}
+            <h4>Ничего не найдено.</h4>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+        
+    
     
     {% if need_pagination %}
         <form action='/search/' method='POST'>

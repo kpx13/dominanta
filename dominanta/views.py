@@ -136,9 +136,11 @@ def search_page(request):
     if request.method == 'GET':
         return render_to_response('articles.html', c, context_instance=RequestContext(request))
     else:       
-        from fullsearch import search
-        items = search(request.POST.get('query', ''))
-            
+        from fullsearch import search_articles, search_archive
+        items_articles = search_articles(request.POST.get('query', ''))
+        items_archive = search_archive(request.POST.get('query', ''))
+        
+        
         c['search_query'] = request.POST.get('query', '')
         """
         paginator = Paginator(items, PAGINATION_COUNT)
@@ -157,7 +159,15 @@ def search_page(request):
         if len(c['page_range']) > 1:
             c['need_pagination'] = True
         """
-        c['articles'] = items
+        c['articles'] = items_articles
+        c['archive'] = items_archive
+        c['articles_active'] = False
+        c['archive_active'] = False
+        if len(items_articles) > 0:
+            c['articles_active'] = True
+        else:
+            c['archive_active'] = True
+        
         return render_to_response('articles_search.html', c, context_instance=RequestContext(request))
     
 def archive_page(request):
