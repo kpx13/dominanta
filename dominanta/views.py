@@ -181,12 +181,16 @@ def archive_filetype_page(request, id):
     c = get_common_context(request)
     c['filetype'] = FileType.objects.get(id=id)
     c['files'] =  ArchiveFile.objects.filter(filetype=id)
+    c['medspec'] = Specialty.objects.get(slug='medspetsialnosti').get_children().filter(show=True).order_by('order')
+    c['dokl'] = Specialty.objects.get(slug='doklinika').get_children().filter(show=True).order_by('order')
     return render_to_response('archive_filetype.html', c, context_instance=RequestContext(request))
  
 def archive_category_page(request, id):
     c = get_common_context(request)
     c['category'] = Specialty.objects.get(id=id)
     c['files'] =  ArchiveFile.objects.filter(category=id)
+    c['medspec'] = Specialty.objects.get(slug='medspetsialnosti').get_children().filter(show=True).order_by('order')
+    c['dokl'] = Specialty.objects.get(slug='doklinika').get_children().filter(show=True).order_by('order')
     return render_to_response('archive_category.html', c, context_instance=RequestContext(request))
  
 """

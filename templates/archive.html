@@ -17,13 +17,30 @@
             <div/>
     </div>
     <div class="row">
-        <div class="content span8">
+        <div class="content span10">
             {% block content %}
             {% endblock %}
         </div> 
         
-        <div class='span4'>
+        <div class='span2'>
             {% block right_content %}
+                <h4><a href='/'>На главную</a></h4>
+                <h4>Медспециальности</h4>
+                <ul class="nav-left">
+            
+                {% for item in medspec %}
+                    <li><a href='/archive/category/{{ item.id }}' data-toggle="tooltip" data-placement="right" title="{{ item.name }}"><img src='/media/{{ item.icon }}' alt='{{ item.name }}'  width="72" height="72" /></a></li>
+                {% endfor %}
+
+                </ul>
+                <h4>Доклиника</h4>
+                <ul class="nav-left">
+            
+                {% for item in dokl %}
+                    <li><a href='/archive/category/{{ item.id }}' data-toggle="tooltip" data-placement="right" title="{{ item.name }}"><img src='/media/{{ item.icon }}' alt='{{ item.name }}'  width="72" height="72" /></a></li>
+                {% endfor %}
+
+                </ul>
             {% endblock %}
         </div>
    
