@@ -177,6 +177,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 ULOGIN_FIELDS = ['first_name', 'last_name', 'email']
 ULOGIN_DISPLAY = 'panel'
+ULOGIN_PROVIDERS = ['vkontakte', 'facebook', 'google', 'twitter', 'yandex']
 #ULOGIN_CALLBACK = 'callback'
 LOGIN_REDIRECT_URL = '/'
 
