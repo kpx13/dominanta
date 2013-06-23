@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.conf import settings
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor.fields import RichTextField
 import pytils
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItem
 import datetime
+from pyPdf import PdfFileReader
+import os.path
+import subprocess
 
 
 class Specialty(MPTTModel):
@@ -52,6 +56,16 @@ class FileType(models.Model):
         ordering=['order']
 
 
+def get_page_content(file_name):
+    out = open('temp.txt', 'w')
+    exec_str = 'pdftotext ' + file_name + ' temp.txt'
+    p = subprocess.Popen(exec_str, shell=True, stdout=out, stderr=open('/dev/null', 'w'))
+    p.wait()
+    out.close()
+    
+    result = open('temp.txt', 'r').read()
+    return result
+
 class ArchiveFile(models.Model):
     category = models.ForeignKey(Specialty, verbose_name=u'категория')
     name = models.CharField(max_length=128, verbose_name=u'название')
@@ -59,6 +73,7 @@ class ArchiveFile(models.Model):
     text = models.CharField(max_length=512, blank=True, verbose_name=u'описание')
     filetype = models.ForeignKey(FileType, verbose_name=u'тип файла')
     file = models.FileField(upload_to= 'uploads/archive', blank=True, max_length=256, verbose_name=u'файл', help_text=u'')
+    file_content = models.TextField(verbose_name='содержимое файла', blank=True, help_text=u'для pnf-файлов заполняется автоматически')
     slug = models.SlugField(max_length=128, verbose_name=u'slug', blank=True, help_text=u'Заполнять не нужно')
     
     class Meta:
@@ -72,6 +87,10 @@ class ArchiveFile(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug=pytils.translit.slugify(self.name)
+        if self.file.name.endswith('.pdf'):
+            file_name = settings.PROJECT_ROOT + '/media/' + self.file.name
+            self.file_content = get_page_content(file_name)
+            
         super(ArchiveFile, self).save(*args, **kwargs)
         
     @staticmethod

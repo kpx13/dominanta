@@ -36,7 +36,7 @@ def search_articles(query):
 
     return res
 
-def search_archive(query, categories):
+def search_archive(query, categories=None):
     cur = get_cursor()
     db_query = get_db_query(query)
     
@@ -47,7 +47,7 @@ def search_archive(query, categories):
     cur.execute(SQL)
     res = []
     for resp in cur.fetchall():
-        if resp[4] in categories:
+        if not categories or (resp[4] in categories):
             res.append({'id': resp[0],
                         'name': resp[1],
                         'text': resp[2],

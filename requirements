@@ -13,3 +13,4 @@ django-taggit
 django-tinymce
 django-ulogin
 django-registration==0.8
+pypdf

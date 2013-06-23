@@ -22,7 +22,7 @@
         <div class="span12">
             
                 <div class="input-append">
-                    <input type="text" id='search-input' class="search-query" name='query' value='{{ search_query }}' style='height: 20px; width: 800px;'>
+                    <input type="text" id='search-input' class="search-query" name='query' value='{{ search_query }}' style='height: 20px; width: 800px;' placeholder='Выберите категории и/или введите запрос'>
                     <button type="submit" class="btn btn-primary" name='search' style='height: 30px; width: 100px'><i class='icon-search icon-white' ></i> Искать</button>
                 </div>
                 {% csrf_token %}

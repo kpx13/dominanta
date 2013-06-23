@@ -29,7 +29,8 @@ $$
 begin
   new.tsv :=
      setweight(to_tsvector('pg_catalog.russian', new.name), 'A') ||
-     setweight(to_tsvector('pg_catalog.russian', new.text), 'B');
+     setweight(to_tsvector('pg_catalog.russian', new.text), 'B') ||
+     setweight(to_tsvector('pg_catalog.russian', new.file_content), 'C');
   return new;
 end
 $$ LANGUAGE plpgsql;

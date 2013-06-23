@@ -137,14 +137,20 @@ def search_page(request):
         return render_to_response('articles.html', c, context_instance=RequestContext(request))
     else:       
         from fullsearch import search_articles, search_archive
-        items_articles = search_articles(request.POST.get('query', ''))
+        query = request.POST.get('query', '').strip()
+        if query:
+            items_articles = search_articles(query)
+            c['search_query'] = query
+        else:
+            items_articles = Article.objects.all()
+            c['search_query'] = u'По всем категориям'
         in_archive = request.POST.get('in_archive', False)
         if in_archive:
-            items_archive = search_archive(request.POST.get('query', ''))
+            items_archive = search_archive(query)
             c['archive'] = items_archive
             c['archive_active'] = False
+    
         
-        c['search_query'] = request.POST.get('query', '')
         """
         paginator = Paginator(items, PAGINATION_COUNT)
         page = int(request.POST.get('page', '1'))
