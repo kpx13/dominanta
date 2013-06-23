@@ -255,3 +255,17 @@
   -moz-border-radius-topright: 4px;
   -moz-border-radius-bottomright: 4px;
 }
+
+.category
+{
+    width: 90px; 
+    height: 90px; 
+    float: left; 
+    text-align: center;
+}
+
+.checked-category
+{
+    color: blue;
+    text-decoration: underline;
+}

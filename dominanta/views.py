@@ -173,7 +173,31 @@ def search_page(request):
             c['show_tab'] = True
         
         return render_to_response('articles_search.html', c, context_instance=RequestContext(request))
-    
+
+def archive_search_page(request):
+    c = get_common_context(request)
+    if request.method == 'GET':
+        return render_to_response('articles.html', c, context_instance=RequestContext(request))
+    else:       
+        from fullsearch import search_archive
+        
+        query = request.POST.get('query', '').strip()
+        categories = [int(x) for x in request.POST.getlist('category', '')]
+        if query:
+            items_archive = search_archive(query, categories)
+            c['search_query'] = query
+        else:
+            items_archive = ArchiveFile.objects.filter(category__in=categories)
+            c['search_query'] = 'по выбранным категориям'
+         
+        c['archive'] = items_archive
+        c['archive_active'] = False
+        
+        c['articles_active'] = False
+        c['show_tab'] = True
+        
+        return render_to_response('archive_search.html', c, context_instance=RequestContext(request))
+
 def archive_page(request):
     c = get_common_context(request)
     c['filetypes'] = FileType.objects.filter(show=True).order_by('order')

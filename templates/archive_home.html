@@ -1,23 +1,70 @@
-{% extends 'archive.html' %}
+{% extends 'base.html' %}
 
-{% block content_top %}
-    <ul class="nav nav-pills">
-        {% for item in filetypes %}
-            <li><a href='/archive/filetype/{{ item.id }}'>{{ item.name }}</a></li>
-        {% endfor %}
-    </ul>
-{% endblock %}
+{% load mptt_tags %}
 
-{% block content %}
-    <h2>Медспециальности</h2>
-    {% for item in medspec %}
-        <a href='/archive/category/{{ item.id }}' data-toggle="tooltip" data-placement="right" title="{{ item.name }}"><img src='/media/{{ item.icon }}' alt='{{ item.name }}'  /></a>
-    {% endfor %}
-{% endblock %}
+{% block wrapper %}
+<form class="form-search" action='/archive/search/' method='POST'>
+    <div class="row" style='margin-top: 20px'>
+        <div class="span10">
+            <ul class="nav nav-pills">
+                {% for item in filetypes %}
+                    <li><a href='/archive/filetype/{{ item.id }}'>{{ item.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="span2">
+            {% include 'login.html' %}
+        </div>
+    </div>
+    
+    
+    <div class="row">
+        <div class="span12">
+            
+                <div class="input-append">
+                    <input type="text" id='search-input' class="search-query" name='query' value='{{ search_query }}' style='height: 20px; width: 800px;'>
+                    <button type="submit" class="btn btn-primary" name='search' style='height: 30px; width: 100px'><i class='icon-search icon-white' ></i> Искать</button>
+                </div>
+                {% csrf_token %}
+            
+        </div>
+    </div>
 
-{% block right_content %}
-    <h2>Доклиника</h2>
-    {% for item in dokl %}
-        <a href='/archive/category/{{ item.id }}' data-toggle="tooltip" data-placement="right" title="{{ item.name }}"><img src='/media/{{ item.icon }}' alt='{{ item.name }}'  /></a>
-    {% endfor %}
+    <div class="row">
+        <div class="span10">
+            <h3>Медспециальности</h3>
+            {% for item in medspec %}
+                <div class='category' >
+                    <label>
+                        <img src='/media/{{ item.icon }}' alt='{{ item.name }}' width=72 height=72  data-toggle="tooltip" data-placement="right" title="{{ item.name }}" /><br />
+                        <input type='checkbox' class='checkbox' name='category' value='{{ item.id }}' style='display:none'>
+                        {{ item.name }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div> 
+        
+        <div class='span2'>
+            <h3>Доклиника</h3>
+            {% for item in dokl %}
+                <div class='category' >
+                    <label>
+                        <img src='/media/{{ item.icon }}' alt='{{ item.name }}' width=72 height=72  data-toggle="tooltip" data-placement="right" title="{{ item.name }}" /><br />
+                        <input type='checkbox' class='checkbox' name='category' value='{{ item.id }}' style='display:none'>
+                        {{ item.name }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</form>
+
+<script>
+        $('.category').click(function(){
+            if ($(this).find('input').is(':checked'))
+                $(this).find('label').addClass('checked-category');
+            else 
+                $(this).find('label').removeClass('checked-category');
+        });
+</script>
 {% endblock %}

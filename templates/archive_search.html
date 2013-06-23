@@ -1,0 +1,17 @@
+{% extends 'archive.html' %}
+
+{% block content %}
+    <ul class="breadcrumb">
+        <li class="active">Поиск: <b>{{ search_query }}</b></li>
+    </ul>
+    
+      {% for a in archive %}
+            <div class="b-info">
+                <a href="/media/{{ a.file }}/" target='_blank'>{{ a.name|safe }}</a><br />
+                {{ a.text|safe }}
+                <a href="/media/{{ a.file }}/" target='_blank'>(подробнее...&hellip;)</a>
+            </div>
+        {% empty %}
+            <h4>Ничего не найдено.</h4>
+        {% endfor %}
+{% endblock %}

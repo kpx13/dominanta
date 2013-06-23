@@ -36,19 +36,21 @@ def search_articles(query):
 
     return res
 
-def search_archive(query):
+def search_archive(query, categories):
     cur = get_cursor()
     db_query = get_db_query(query)
     
-    # if archive
-    SQL = u"SELECT id, ts_headline(name, to_tsquery('%s')), ts_headline(text, to_tsquery('%s')), file, ts_rank(tsv, to_tsquery('%s')) as rank from archive_archivefile where tsv @@ to_tsquery('pg_catalog.russian', '%s') ORDER BY rank DESC;" % (db_query, db_query, db_query, db_query)
+    SQL = u"""SELECT id, ts_headline(name, to_tsquery('%s')), ts_headline(text, to_tsquery('%s')), file, category_id, ts_rank(tsv, to_tsquery('%s')) as rank 
+    FROM archive_archivefile 
+    WHERE tsv @@ to_tsquery('pg_catalog.russian', '%s')
+    ORDER BY rank DESC;""" % (db_query, db_query, db_query, db_query)
     cur.execute(SQL)
-    
     res = []
     for resp in cur.fetchall():
-        res.append({'id': resp[0],
-                    'name': resp[1],
-                    'text': resp[2],
-                    'file': resp[3]})
+        if resp[4] in categories:
+            res.append({'id': resp[0],
+                        'name': resp[1],
+                        'text': resp[2],
+                        'file': resp[3]})
     
     return res

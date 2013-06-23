@@ -4,17 +4,14 @@
 
 {% block wrapper %}
             
-    <div class="row">
+    <div class="row" style='margin-top: 20px'>
             <div class="span9">
-                <br />
                 {% block content_top %}
                 {% endblock %}
-                </div>
-                <div class="span3" style='padding-top: 20px'>
-                    {% include 'login.html' %}
-                    {% include 'search_form.html' %}
-                </div>
-            <div/>
+            </div>
+            <div class="span3">
+                {% include 'login.html' %}
+            </div>
     </div>
     <div class="row">
         <div class="content span10">
@@ -25,6 +22,7 @@
         <div class='span2'>
             {% block right_content %}
                 <a href='/'><img src='/static/img/1.jpg' alt='На главную'  width="72" height="72" /><br />На главную</a>
+                <a href='/archive/'><img src='/static/img/8.jpg' alt='В архив'  width="72" height="72" /><br />В архив</a>
             {% endblock %}
         </div>
    
