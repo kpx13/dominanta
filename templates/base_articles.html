@@ -4,28 +4,25 @@
 
 {% block wrapper %}
             
-    <div class="row">
-            <div class="span9">
-                <ul class="nav-top" >
-                    {% for m in top_menu %}
-                        <li><a href="/articles/category/{{ m.id }}/" class="nav-main__l" ><img src="/media/{{ m.icon }}"/>{{ m.name }}</a></li>
-                    {% endfor %}
-                    <li><a href="/archive/" class="nav-main__l" ><img src="/static/img/8.jpg"/>Архив</a></li>
-                </ul>
-            </div>
-            <div class="span3" style='padding-top: 20px'>
-                {% include 'login.html' %}
-                {% include 'search_form.html' %}
-            </div>
-           
-    </div>
-    <div class="row">
+    <div class="row"  style='padding-top: 20px'>
         <div class="content span9">
             {% block content %}
             {% endblock %}
         </div> 
         
         <div class='span3'>
+            <div class="span3">
+                {% include 'login.html' %}
+                {% include 'search_form.html' %}
+            </div>
+            <ul class="nav-left">
+                <li><a href="/archive/" data-toggle="tooltip" data-placement="right" title="Главная"><img src="/static/img/1.jpg"  width="72" height="72"/></a></li>
+                <li><a href="/archive/" data-toggle="tooltip" data-placement="right" title="Архив"><img src="/static/img/8.jpg"  width="72" height="72"/></a></li>
+                {% for m in top_menu %}
+                    <li><a href='/articles/category/{{ m.id }}/' data-toggle="tooltip" data-placement="right" title="{{ m.name }}"><img src='/media/{{ m.icon }}' alt='{{ m.name }}'  width="72" height="72" /></a></li>
+                {% endfor %}
+
+            </ul>
             {% block right_content %}
             {% endblock %}
         </div>
