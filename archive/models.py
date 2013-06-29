@@ -58,11 +58,11 @@ class FileType(models.Model):
 
 def get_page_content(file_name):
     out = open('temp.txt', 'w')
-    exec_str = 'pdftotext ' + file_name + ' temp.txt'
-    p = subprocess.Popen(exec_str, shell=True, stdout=out, stderr=open('/dev/null', 'w'))
-    p.wait()
+    exec_str = u'pdftotext ' + file_name + ' temp.txt'
+    p = subprocess.call(exec_str, shell=True, stdout=out, stderr=open('/dev/null', 'w'))
+    import time
+    time.sleep(1)
     out.close()
-    
     result = open('temp.txt', 'r').read()
     return result
 
@@ -85,13 +85,13 @@ class ArchiveFile(models.Model):
         return self.name
     
     def save(self, *args, **kwargs):
+	super(ArchiveFile, self).save(*args, **kwargs)
         if not self.slug:
             self.slug=pytils.translit.slugify(self.name)
         if self.file.name.endswith('.pdf'):
             file_name = settings.PROJECT_ROOT + '/media/' + self.file.name
             self.file_content = get_page_content(file_name)
-            
-        super(ArchiveFile, self).save(*args, **kwargs)
+	super(ArchiveFile, self).save(*args, **kwargs)
         
     @staticmethod
     def get_by_slug(slug):
