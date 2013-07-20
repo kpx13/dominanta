@@ -6,6 +6,7 @@ import pytils
 from taggit.managers import TaggableManager
 from taggit.models import Tag, TaggedItem
 import datetime
+from django.contrib.auth.models import User
 
 
 class Category(MPTTModel):
@@ -118,6 +119,7 @@ class Article(models.Model):
             return list(Article.objects.filter(tags__in=[tag]))
 
 class Comment(models.Model):
+    user = models.ForeignKey(User, blank=True, verbose_name=u'автор')
     article = models.ForeignKey(Article, verbose_name=u'статья', related_name='comment')
     name = models.CharField(max_length=128, verbose_name=u'имя')
     date = models.DateTimeField(auto_now=True, verbose_name=u'дата')

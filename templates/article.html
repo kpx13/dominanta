@@ -52,7 +52,19 @@
             
             <h3>Комментарии ({{ article.comment.count }})</h3>
             {% for c in article.comment.all %}
-                <p style='margin-left: 20px'><b>{{ c.name }}</b>: <br />{{ c.text }}<br /><i>{{ c.date }}</i></p>
+                <p style='margin-left: 20px'>
+                    <b>{{ c.name }}</b>:
+                    {% if request.user.is_superuser %}
+                        (<a href='/comment/{{ c.id }}/ban/'>Забанить</a> &nbsp;|&nbsp;
+                        <a href='/comment/{{ c.id }}/delete/'>Удалить</a>)
+                    {% endif %}
+                    
+                    <br />
+                    {{ c.text }}<br />
+                    <i>{{ c.date }}</i>
+                </p>
+                
+                
             {% endfor %}
         </div>
 {% endblock %}

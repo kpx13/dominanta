@@ -59,6 +59,7 @@ def article_page(request, id):
     if request.method == 'POST':
         if request.POST['text']:
             Comment(article=c['article'],
+                    user=request.user,
                     name=request.user.first_name + ' ' + request.user.last_name,
                     text=request.POST['text']).save()
         return HttpResponseRedirect(request.path)
@@ -105,6 +106,26 @@ def article_del_page(request, id):
     c = get_common_context(request)
     Article.objects.get(id=id).delete()
     return HttpResponseRedirect('/')
+
+def comment_del(request, id):
+    if not request.user.is_superuser:
+        return HttpResponseRedirect('/')
+    c = Comment.objects.get(id=id)
+    article_id = c.article.id 
+    c.delete()
+    return HttpResponseRedirect('/article/%s/' % article_id)
+
+def comment_ban(request, id):
+    if not request.user.is_superuser:
+        return HttpResponseRedirect('/')
+    c = Comment.objects.get(id=id)
+    article_id = c.article.id
+    u = c.user
+    print u, ' is going to ban!', type(u)
+    u.is_active = False
+    u.save()
+    c.delete()
+    return HttpResponseRedirect('/article/%s/' % article_id)
 
 def articles_page(request, id):
     c = get_common_context(request)
