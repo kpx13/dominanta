@@ -11,6 +11,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from livesettings import config_value
 
+from blog.forms import ArticleForm
 from pages.models import Page
 from blog.models import Article, Category, ArticleTag, Comment
 from archive.models import Specialty, FileType, ArchiveFile
@@ -72,6 +73,38 @@ def article_page(request, id):
         curr_cat = curr_cat.parent
     c['breadcrumb'].reverse()
     return render_to_response('article.html', c, context_instance=RequestContext(request))
+
+def article_edit_page(request, id):
+    if not request.user.is_superuser:
+        return HttpResponseRedirect('/article/%s/' % id)
+    c = get_common_context(request)
+    c['article'] = Article.objects.get(id=id)
+    
+    if request.method == 'POST':
+        if (request.POST['action'] == 'save') or (request.POST['action'] == 'save_back'):
+            af = ArticleForm(request.POST, instance=c['article'])
+            if af.is_valid(): 
+                af.save()
+                if request.POST['action'] == 'save_back':
+                    return HttpResponseRedirect('/article/%s/' % id)
+                else:
+                    return HttpResponseRedirect('/article/%s/edit/' % id)
+            else:
+                print af.errors
+        return HttpResponseRedirect(request.path)
+    categories = c['article'].category.all().filter(show=True)
+
+    c['articles'] = Article.objects.filter(category__in=categories)
+    
+    c['article_form'] = ArticleForm(instance=c['article'])
+    return render_to_response('article_edit.html', c, context_instance=RequestContext(request))
+
+def article_del_page(request, id):
+    if not request.user.is_superuser:
+        return HttpResponseRedirect('/article/%s/' % id)
+    c = get_common_context(request)
+    Article.objects.get(id=id).delete()
+    return HttpResponseRedirect('/')
 
 def articles_page(request, id):
     c = get_common_context(request)
@@ -223,50 +256,3 @@ def archive_category_page(request, id):
     c['files'] =  ArchiveFile.objects.filter(category=id)
     return render_to_response('archive_category.html', c, context_instance=RequestContext(request))
  
-"""
-def articles_page(request, category=None):
-    c = get_common_context(request)
-    if category:
-        c['category'] = Category.get_by_slug(category)
-        categories = c['category'].get_descendants(include_self=True)
-        c['sub_categories'] = c['category'].get_children()
-
-        c['breadcrumb'] = []
-        curr_cat = c['category']
-        while curr_cat:
-            c['breadcrumb'].append(curr_cat)
-            curr_cat = curr_cat.parent
-        c['breadcrumb'].reverse()
-        c['breadcrumb'] = c['breadcrumb'][:-1]
-        
-        items = Article.objects.filter(category__in=categories)
-    else:
-        items = Article.objects.all()
-        
-        
-    # search
-    if 'search' in request.GET:
-        from fullsearch import search
-        items = search(request.GET['query'])
-        c['search_query'] = request.GET.get('query', '')
-        c['articles'] = items
-        return render_to_response('articles_search.html', c, context_instance=RequestContext(request))
-    
-    paginator = Paginator(items, 2)
-    page = int(request.GET.get('page', '1'))
-    c['get_request'] = c['request_url'][:-1]
-    try:
-        c['articles'] = paginator.page(page)
-    except PageNotAnInteger:
-        page = 1
-        c['articles'] = paginator.page(page)
-    except EmptyPage:
-        page = paginator.num_pages
-        c['articles'] = paginator.page(page)
-    c['page'] = page
-    c['page_range'] = paginator.page_range
-    if len(c['page_range']) > 1:
-        c['need_pagination'] = True
-    return render_to_response('articles.html', c, context_instance=RequestContext(request))
-    
-"""

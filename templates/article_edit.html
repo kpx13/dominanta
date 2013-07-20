@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block extended_head %}
+    {{ article_form.media }}
+{% endblock %}
+
+{% block wrapper %}
+    <form method='post'>
+        
+        <div class="b-info">
+            <h2> Название: {{ article_form.name }}</h2>
+            <div style='display: none'>{{ article_form.category }}</div>
+
+            
+            <span class="b-info__tags">Дата: {{ article_form.date }}</span>
+            <h3>Краткое описание:</h3>
+            {{ article_form.desc }}
+            <h3>Полный текст:</h3>
+            {{ article_form.text }}
+        
+            
+            <span class="b-info__tags b-info__tags_bottom">&lt;тэги:
+                {{ article_form.tags }}
+            &gt; </span>
+            
+            <button type='submit' class='btn btn-info' name='action' value='save'>Сохранить</button>
+            <button type='submit' class='btn btn-success' name='action' value='save_back'>Сохранить и вернуться</button>
+            <a href='../' class='btn btn-danger' >Отменить</a>
+    
+        </div>
+        {% csrf_token %}
+    </form>
+{% endblock %}

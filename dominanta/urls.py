@@ -29,6 +29,8 @@ urlpatterns = patterns('',
 
     url(r'^$' , views.home_page),
     url(r'^article/(?P<id>[\w-]*)/$' , views.article_page),
+    url(r'^article/(?P<id>[\w-]*)/edit/$' , views.article_edit_page),
+    url(r'^article/(?P<id>[\w-]*)/delete/$' , views.article_del_page),
     url(r'^articles/category/(?P<id>[\w-]+)/$' , views.articles_page),
     url(r'^articles/tag/(?P<id>[\w-]+)/$' , views.tags_page),
     url(r'^search/$' , views.search_page),

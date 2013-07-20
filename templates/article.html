@@ -20,11 +20,21 @@
             <h2>{{ article.name }}</h2>
             <span class="b-info__tags">{{ article.date }}</span>
             {{ article.text|safe }}
+            
+            
+                {% if request.user.is_superuser %}
+                    <a href='/article/{{ article.id }}/edit/'>Редактировать</a> &nbsp;|&nbsp;
+                    <a href='/article/{{ article.id }}/delete/'>Удалить</a>
+                    <br />
+                {% endif %}
+            
             <span class="b-info__tags b-info__tags_bottom">&lt;тэги:
                 {% for t in article.tags.all %}
                     <a href="/tags/{{ t.slug }}/">{{ t.name }}</a>,
                 {% endfor %}
             &gt; </span>
+            
+            
             <div class="share42init"></div>
                             <script type="text/javascript" src="/static/js/share42/share42.js"></script>
                             <script type="text/javascript">share42('/static/js/share42/')</script>
