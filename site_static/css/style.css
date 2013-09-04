@@ -159,6 +159,7 @@
 .b-info__title{
     font-size: 26px;
     letter-spacing: -0.8pt;
+    color: #444;
 }
 .b-info__tags{
     font-size: 13px;
@@ -174,6 +175,10 @@
 }
 .b-info{
     margin-bottom:50px;
+}
+.b-info a{
+    color: #444;
+    text-decoration: underline;
 }
 .content a{
 }
@@ -269,3 +274,5 @@
     color: blue;
     text-decoration: underline;
 }
+
+.b-info img {padding: 10px}
