@@ -19,9 +19,10 @@
         <div class="b-info">
             <h2>{{ article.name }}</h2>
             <span class="b-info__tags">{{ article.date }}</span>
+            
+            {{ a.desc|safe }}
             {{ article.text|safe }}
-            
-            
+
                 {% if request.user.is_superuser %}
                     <a href='/article/{{ article.id }}/edit/'>Редактировать</a> &nbsp;|&nbsp;
                     <a href='/article/{{ article.id }}/delete/'>Удалить</a>

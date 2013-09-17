@@ -17,7 +17,7 @@
         {% for a in articles %}
             <div class="b-info">
                 <a class="b-info__title" href="/article/{{ a.id }}/">{{ a.name|safe }}</a><br />
-                {{ a.text|safe }}
+                {{ a.desc|safe }}
                 <a href="/article/{{ a.id }}/">(подробнее...&hellip;)</a>
             </div>
         {% empty %}
@@ -28,7 +28,7 @@
       {% for a in archive %}
             <div class="b-info">
                 <a href="/media/{{ a.file }}/" target='_blank'>{{ a.name|safe }}</a><br />
-                {{ a.text|safe }}
+                {{ a.desc|safe }}
                 <a href="/media/{{ a.file }}/" target='_blank'>(подробнее...&hellip;)</a>
             </div>
         {% empty %}
@@ -41,7 +41,7 @@
         {% for a in articles %}
             <div class="b-info">
                 <a class="b-info__title" href="/article/{{ a.id }}/">{{ a.name|safe }}</a><br />
-                {{ a.text|safe }}
+                {{ a.desc|safe }}
                 <a href="/article/{{ a.id }}/">(подробнее...&hellip;)</a>
             </div>
         {% empty %}

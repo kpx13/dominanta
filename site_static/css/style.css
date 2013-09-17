@@ -276,3 +276,10 @@
 }
 
 .b-info img {padding: 10px}
+
+#plus-button {display: none}
+
+h1, h2, h3, h4, h5, p, a
+{
+    color: #333;
+}

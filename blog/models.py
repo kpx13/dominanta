@@ -82,8 +82,8 @@ class Article(models.Model):
     category = models.ManyToManyField(Category, verbose_name=u'категория')
     name = models.CharField(max_length=128, verbose_name=u'название')
     date = models.DateField(verbose_name=u'дата')
-    text = RichTextField(verbose_name=u'контент')
     desc = RichTextField(max_length=512, verbose_name=u'вступительный контент')
+    text = RichTextField(verbose_name=u'продолжение контента')
     tags = TaggableManager(blank=True, through=ArticleTaggedItem)
     slug = models.SlugField(max_length=128, verbose_name=u'slug', unique=True, blank=True, help_text=u'Заполнять не нужно')
    
