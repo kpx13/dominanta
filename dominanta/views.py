@@ -16,7 +16,7 @@ from pages.models import Page
 from blog.models import Article, Category, ArticleTag, Comment
 from archive.models import Specialty, FileType, ArchiveFile
 
-PAGINATION_COUNT = 2
+PAGINATION_COUNT = 15
 
 def get_common_context(request):
     c = {}

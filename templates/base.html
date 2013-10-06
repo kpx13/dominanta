@@ -17,13 +17,14 @@
         <div class="container">
             {% block wrapper %}
             {% endblock %}
-
+            {% if request_url != 'home' %}
             <div class='row'>
                 <div class='span12'>
                     <hr />
                     &copy; Доминанта Здоровья 2013
                 </div>
             </div>
+            {% endif %}
         </div>
     </body> 
 </html>
