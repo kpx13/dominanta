@@ -91,7 +91,7 @@ def article_edit_page(request, id):
                 else:
                     return HttpResponseRedirect('/article/%s/edit/' % id)
             else:
-                print af.errors
+                pass
         return HttpResponseRedirect(request.path)
     categories = c['article'].category.all().filter(show=True)
 
@@ -121,7 +121,6 @@ def comment_ban(request, id):
     c = Comment.objects.get(id=id)
     article_id = c.article.id
     u = c.user
-    print u, ' is going to ban!', type(u)
     u.is_active = False
     u.save()
     c.delete()
@@ -131,8 +130,8 @@ def articles_page(request, id):
     c = get_common_context(request)
 
     c['category'] = Category.objects.get(id=id)
-    categories = c['category'].get_descendants(include_self=True)
-    c['sub_categories'] = c['category'].get_children()
+    categories = c['category'].get_descendants(include_self=True).filter(show=True)
+    c['sub_categories'] = c['category'].get_children().filter(show=True)
 
     c['breadcrumb'] = []
     curr_cat = c['category']

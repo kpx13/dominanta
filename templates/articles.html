@@ -1,6 +1,7 @@
 {% extends 'base_articles.html' %}
 
 {% block content %}
+    {% comment %}
     {% if category %}
     <ul class="breadcrumb">
         {% for b in breadcrumb %} 
@@ -9,6 +10,7 @@
         <li class="active">{{ category.name }}</li>
     </ul>
     {% endif %}
+    {% endcomment %}
     
     {% if tag %}
     <ul class="breadcrumb">

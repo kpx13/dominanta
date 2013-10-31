@@ -20,7 +20,7 @@
             <h2>{{ article.name }}</h2>
             <span class="b-info__tags">{{ article.date }}</span>
             
-            {{ a.desc|safe }}
+            {{ article.desc|safe }}
             {{ article.text|safe }}
 
                 {% if request.user.is_superuser %}
