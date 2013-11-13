@@ -46,6 +46,7 @@ class CustomIndexDashboard(Dashboard):
                 models=(
                     'blog.models.Category',
                     'blog.models.Article',
+                    'blog.models.Comment',
                     'blog.models.ArticleTag',
                 ),
             )

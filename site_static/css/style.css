@@ -160,6 +160,7 @@
     font-size: 26px;
     letter-spacing: -0.8pt;
     color: #444;
+    text-decoration: none !important;
 }
 .b-info__tags{
     font-size: 13px;

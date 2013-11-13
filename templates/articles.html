@@ -2,20 +2,23 @@
 
 {% block content %}
     {% comment %}
-    {% if category %}
-    <ul class="breadcrumb">
-        {% for b in breadcrumb %} 
-            <li><a href='/articles/category/{{b.id}}'>{{ b.name }}</a> <span class="divider">/</span></li>
-        {% endfor %} 
-        <li class="active">{{ category.name }}</li>
-    </ul>
-    {% endif %}
+        {% if category %}
+        <ul class="breadcrumb">
+            {% for b in breadcrumb %} 
+                <li><a href='/articles/category/{{b.id}}'>{{ b.name }}</a> <span class="divider">/</span></li>
+            {% endfor %} 
+            <li class="active">{{ category.name }}</li>
+        </ul>
+        {% endif %}
     {% endcomment %}
     
+    
     {% if tag %}
-    <ul class="breadcrumb">
-        <li class="active">Поиск по тегу: <b>{{ tag.name }}</b></li>
-    </ul>
+        <ul class="breadcrumb">
+            <li class="active">Поиск по тегу: <b>{{ tag.name }}</b></li>
+        </ul>
+    {% else %}
+        <br /></br /><br /></br />
     {% endif %}
     
     {% for a in articles %}
@@ -23,7 +26,7 @@
             <a class="b-info__title" href="/article/{{ a.id }}/">{{ a.name }}</a>
             <span class="b-info__tags">{{ a.date }}</span>
             {{ a.desc|safe }}
-            <a href="/article/{{ a.id }}/">(подробнее...&hellip;)</a>
+            <a href="/article/{{ a.id }}/">(подробнее&hellip;)</a>
             <span class="b-info__tags b-info__tags_bottom">Комментариев ({{ a.comment.count }}) &lt;тэги:
                 {% for t in a.tags.all %}
                     <a href="/articles/tag/{{ t.id }}/">{{ t.name }}</a>,
@@ -57,24 +60,26 @@
 {% endblock %}
 
 {% block right_content %}
-    {% if sub_categories %}
-        <h5>Категории:</h5>
-        <ul class="nav nav-list">
-            <li class="nav-header">{{ category.name }}</li>
-            {% for s in sub_categories %} 
-                <li><a href='/articles/category/{{s.id}}'>{{ s.name }}</a></li>
+    {% comment %}
+        {% if sub_categories %}
+            <h5>Категории:</h5>
+            <ul class="nav nav-list">
+                <li class="nav-header">{{ category.name }}</li>
+                {% for s in sub_categories %} 
+                    <li><a href='/articles/category/{{s.id}}'>{{ s.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        {% if all_articles %}
+            <h5>Статьи:</h5>
+            <ul class="nav nav-list">
+            {% for a in all_articles %}
+                <li><a href="/article/{{ a.id }}/">{{ a.name }}</a></li>
             {% endfor %}
-        </ul>
-    {% endif %}
-    
-    {% if all_articles %}
-        <h5>Статьи:</h5>
-        <ul class="nav nav-list">
-        {% for a in all_articles %}
-            <li><a href="/article/{{ a.id }}/">{{ a.name }}</a></li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    
-    {% include 'tags_widget.html' %}
+            </ul>
+        {% endif %}
+        
+        {% include 'tags_widget.html' %}
+    {% endcomment %}
 {% endblock %}

@@ -2,12 +2,12 @@
 
 {% block content %}
         {% if category %}
-        <ul class="breadcrumb">
-            {% for b in breadcrumb %} 
-                <li><a href='/articles/category/{{b.id}}'>{{ b.name }}</a> <span class="divider">/</span></li>
-            {% endfor %} 
-            <li class="active">{{ article.name }}</li>
-        </ul>
+            <ul class="breadcrumb">
+                {% for b in breadcrumb %} 
+                    <li><a href='/articles/category/{{b.id}}'>{{ b.name }}</a> <span class="divider">/</span></li>
+                {% endfor %} 
+                <li class="active">{{ article.name }}</li>
+            </ul>
         {% endif %}
         
         {% if tag %}
@@ -16,12 +16,16 @@
         </ul>
         {% endif %}
         
+        <br /><br /><br />
         <div class="b-info">
-            <h2>{{ article.name }}</h2>
+            <p class="b-info__title">{{ article.name }}</p>
             <span class="b-info__tags">{{ article.date }}</span>
             
             {{ article.desc|safe }}
             {{ article.text|safe }}
+            {% if article.source_url %}
+                <p><i>Источник: <a href='{{ article.source_url }}' target='_blank'>{{ article.source_name }}</a></i></p>
+            {% endif %}
 
                 {% if request.user.is_superuser %}
                     <a href='/article/{{ article.id }}/edit/'>Редактировать</a> &nbsp;|&nbsp;
@@ -64,21 +68,22 @@
                     {{ c.text }}<br />
                     <i>{{ c.date }}</i>
                 </p>
-                
-                
+
             {% endfor %}
         </div>
 {% endblock %}
 
 {% block right_content %}
-    {% if articles %}
-        <h5>Статьи из этой категории:</h5>
-        <ul class="nav nav-list">
-        {% for a in articles %}
-            <li><a href="/article/{{ a.id }}/">{{ a.name }}</a></li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    
-    {% include 'tags_widget.html' %}
+    {% comment %}
+        {% if articles %}
+            <h5>Статьи из этой категории:</h5>
+            <ul class="nav nav-list">
+            {% for a in articles %}
+                <li><a href="/article/{{ a.id }}/">{{ a.name }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        
+        {% include 'tags_widget.html' %}
+    {% endcomment %}
 {% endblock %}

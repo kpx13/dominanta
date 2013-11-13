@@ -7,7 +7,7 @@ from mptt.admin import MPTTModelAdmin
 
 class CommentInline(admin.StackedInline): 
     model = models.Comment
-    extra = 3
+    extra = 0
 
 class CategoryAdmin(MPTTModelAdmin):
     list_display = (  'name', 'id' , 'show', 'order', 'slug')
@@ -20,12 +20,14 @@ class ArticleAdmin(admin.ModelAdmin):
     inlines = [CommentInline, ]
     list_display = ('name', 'date', 'text')
     search_fields = ('name', 'text')
-    ordering = ('date', )
     formfield_overrides = {
         django_models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
 
+class CommentsAdmin(admin.ModelAdmin):
+    list_display = ('name', 'date', 'text')
 
 
 admin.site.register(models.Article, ArticleAdmin)
+admin.site.register(models.Comment, CommentsAdmin)
 admin.site.register(models.ArticleTag)

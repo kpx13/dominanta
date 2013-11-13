@@ -85,12 +85,15 @@ class Article(models.Model):
     desc = RichTextField(max_length=2048, verbose_name=u'вступительный контент')
     text = RichTextField(verbose_name=u'продолжение контента')
     tags = TaggableManager(blank=True, through=ArticleTaggedItem)
+    source_name = models.CharField(max_length=512, blank=True, verbose_name=u'название источника')
+    source_url = models.CharField(max_length=512, blank=True, verbose_name=u'ссылка на источник')
+    
     slug = models.SlugField(max_length=300, verbose_name=u'slug', unique=True, blank=True, help_text=u'Заполнять не нужно')
    
     class Meta:
         verbose_name = u'статья'
         verbose_name_plural = u'статьи'
-        ordering = ['date']
+        ordering = ['-date']
     
     def __unicode__(self):
         return self.name
