@@ -141,7 +141,7 @@ def articles_page(request, id):
     c['breadcrumb'].reverse()
     c['breadcrumb'] = c['breadcrumb'][:-1]
     
-    items = Article.objects.filter(category__in=categories)
+    items = Article.objects.filter(category=c['category'])
     c['all_articles'] = items
     
     paginator = Paginator(items, PAGINATION_COUNT)
