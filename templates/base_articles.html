@@ -19,7 +19,7 @@
             <ul class="nav-left">
                 <li style='margin-left: 35px'><a href="/" data-toggle="tooltip" data-placement="right" title="Главная"><img src="/static/img/logo.png"  width="72" height="72"/></a></li>
                 <br />
-                <li><a href="/archive/" data-toggle="tooltip" data-placement="right" title="Архив"><img src="/static/img/8.jpg"  width="72" height="72"/></a></li>
+               <!-- <li><a href="/archive/" data-toggle="tooltip" data-placement="right" title="Архив"><img src="/static/img/8.jpg"  width="72" height="72"/></a></li> -->
                 {% for m in top_menu %}
                     <li><a href='/articles/category/{{ m.id }}/' data-toggle="tooltip" data-placement="right" title="{{ m.name }}"><img src='/media/{{ m.icon }}' alt='{{ m.name }}'  width="72" height="72" /></a></li>
                 {% endfor %}
